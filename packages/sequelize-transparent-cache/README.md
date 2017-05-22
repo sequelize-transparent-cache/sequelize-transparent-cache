@@ -36,11 +36,13 @@ const sequelize = new Sequelize('database', 'user', 'password', {
   port: 3306,
   define: {
     classMethods,
-    indexMethods
+    instanceMethods
   }
 })
 
-// register your models...
+// Register your models, connect to db
+// ...
+
 const User = sequelize.models.User
 
 await User.cache().create({ // Create user in db and in cache

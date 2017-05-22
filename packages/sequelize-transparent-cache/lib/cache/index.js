@@ -1,4 +1,4 @@
-const { stringify, parse } = require('./util')
+const { instanceToData, dataToInstance } = require('./util')
 
 function save (client, instance) {
   if (!instance) {
@@ -8,19 +8,19 @@ function save (client, instance) {
   const key = [
     instance.Model.name,
     instance.id
-  ].join(':')
+  ]
 
-  return client.set(key, stringify(instance)).then(() => instance)
+  return client.set(key, instanceToData(instance)).then(() => instance)
 }
 
 function get (client, model, id) {
   const key = [
     model.name,
     id
-  ].join(':')
+  ]
 
-  return client.get(key).then(json => {
-    return parse(model, json)
+  return client.get(key).then(data => {
+    return dataToInstance(model, data)
   })
 }
 
@@ -32,7 +32,7 @@ function destroy (client, instance) {
   const key = [
     instance.Model.name,
     instance.id
-  ].join(':')
+  ]
 
   return client.del(key)
 }
