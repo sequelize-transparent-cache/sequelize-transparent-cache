@@ -1,0 +1,35 @@
+{
+  "name": "sequelize-transparent-cache-variable",
+  "version": "1.0.0",
+  "description": "Local variable adaptor for sequelize-transparent-cache",
+  "main": "VariableAdaptor.js",
+  "keywords": [
+    "sequelize",
+    "cache",
+    "plugin",
+    "adapter"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SDSWanderer/sequelize-transparent-cache-variable.git"
+  },
+  "author": {
+    "name": "Daniel Hreben",
+    "email": "daniel.hreben@gmail.com"
+  },
+  "license": "CC-BY-4.0",
+  "peerDependencies": {
+    "sequelize-transparent-cache": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
