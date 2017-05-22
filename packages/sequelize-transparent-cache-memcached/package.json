@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache-memcached",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Memcached adaptor for sequelize-transparent-cache",
   "main": "MemcachedAdaptor.js",
   "keywords": [
@@ -21,7 +21,7 @@
   "license": "CC-BY-4.0",
   "peerDependencies": {
     "memcached": "^2.0.0",
-    "sequelize-transparent-cache": "^0.9.0"
+    "sequelize-transparent-cache": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

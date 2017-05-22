@@ -9,17 +9,18 @@ class MemcachedAdaptor {
 
   _withNamespace (key) {
     const namespace = this.namespace
-
-    return namespace
-      ? `${namespace}:${key}`
+    const keyWithNamespace = namespace
+      ? [namespace, ...key]
       : key
+
+    return keyWithNamespace.join(':')
   }
 
   set (key, value) {
     return new Promise((resolve, reject) => {
       this.client.set(
         this._withNamespace(key),
-        value,
+        JSON.stringify(value),
         this.lifetime,
         error => error ? reject(error) : resolve()
       )
@@ -30,7 +31,17 @@ class MemcachedAdaptor {
     return new Promise((resolve, reject) => {
       this.client.get(
         this._withNamespace(key),
-        (error, data) => error ? reject(error) : resolve(data)
+        (error, data) => {
+          if (error) {
+            return reject(error)
+          }
+
+          if (!data) {
+            return resolve(data)
+          }
+
+          resolve(JSON.parse(data))
+        }
       )
     })
   }
@@ -39,7 +50,7 @@ class MemcachedAdaptor {
     return new Promise((resolve, reject) => {
       this.client.del(
         this._withNamespace(key),
-        error => error ? reject(error) : resolve(error)
+        error => error ? reject(error) : resolve()
       )
     })
   }
