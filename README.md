@@ -1,4 +1,12 @@
 # sequelize-transparent-cache
+
+[![Build Status](https://travis-ci.org/SDSWanderer/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/SDSWanderer/sequelize-transparent-cache)
+[![Coverage Status](https://coveralls.io/repos/github/SDSWanderer/sequelize-transparent-cache/badge.svg?branch=master)](https://coveralls.io/github/SDSWanderer/sequelize-transparent-cache?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Code Climate](https://codeclimate.com/github/SDSWanderer/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![npm version](https://badge.fury.io/js/sequelize-transparent-cache.svg)](https://badge.fury.io/js/sequelize-transparent-cache)
+[![Dependency Status](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
+
 Simple to use and universal cache layer for Sequelize.
 * Abstract: does not depends on underlying database, or cache specific
 * Transparent: objects returned from cache are regular Sequelize instances with all your methods
