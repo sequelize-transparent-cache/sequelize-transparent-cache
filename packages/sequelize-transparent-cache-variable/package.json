@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache-variable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Local variable adaptor for sequelize-transparent-cache",
   "main": "VariableAdaptor.js",
   "keywords": [
