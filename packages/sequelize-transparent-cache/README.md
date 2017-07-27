@@ -1,11 +1,11 @@
 # sequelize-transparent-cache
 
-[![Build Status](https://travis-ci.org/SDSWanderer/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/SDSWanderer/sequelize-transparent-cache)
-[![Coverage Status](https://coveralls.io/repos/github/SDSWanderer/sequelize-transparent-cache/badge.svg?branch=master)](https://coveralls.io/github/SDSWanderer/sequelize-transparent-cache?branch=master)
+[![Build Status](https://travis-ci.org/DanielHreben/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/DanielHreben/sequelize-transparent-cache)
+[![Coverage Status](https://coveralls.io/repos/github/DanielHreben/sequelize-transparent-cache/badge.svg?branch=master)](https://coveralls.io/github/DanielHreben/sequelize-transparent-cache?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Code Climate](https://codeclimate.com/github/SDSWanderer/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Code Climate](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
 [![npm version](https://badge.fury.io/js/sequelize-transparent-cache.svg)](https://badge.fury.io/js/sequelize-transparent-cache)
-[![Dependency Status](https://david-dm.org/SDSWanderer/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
+[![Dependency Status](https://david-dm.org/DanielHreben/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
 
 Simple to use and universal cache layer for Sequelize.
 * Abstract: does not depends on underlying database, or cache specific
@@ -61,7 +61,7 @@ await User.cache().create({ // Create user in db and in cache
 const user = await User.cache().findById(1) // Load user from cache
 
 await user.cache().update({ // Update in db and cache
-  name: 'Dmitry'
+  name: 'Vikki'
 })
 
 ```
@@ -77,7 +77,7 @@ Instance:
   * [`reload()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#instance-method-reload)
 
 Model:
-  * `create()`
+  * [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
   * [`findById()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findById)
   * [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
   * [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
@@ -90,10 +90,10 @@ In addition, both objects will contain `client()` method to get  cache adaptor.
 * [ioredis](https://www.npmjs.com/package/sequelize-transparent-cache-ioredis)
 * [variable](https://www.npmjs.com/package/sequelize-transparent-cache-variable)
 
-You can easy write your own adapter. Each adatper must implement 3 methods:
+You can easy write your own adaptor. Each adatper must implement 3 methods:
 
 * `get(path: Array): Promise<value>`
 * `set(path: Array, value: Object): Promise`
 * `del(path: Array): Promise`
 
-Checkout existed adapters for reference implementation.
+Checkout existed adaptors for reference implementation.
