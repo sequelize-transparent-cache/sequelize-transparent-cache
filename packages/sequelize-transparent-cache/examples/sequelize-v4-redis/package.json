@@ -1,0 +1,11 @@
+{
+  "name": "sequelize-v4-redis",
+  "main": "app.js",
+  "dependencies": {
+    "ioredis": "^3.1.2",
+    "mysql2": "^1.3.6",
+    "sequelize": "^4.4.2",
+    "sequelize-transparent-cache": "^1.1.0",
+    "sequelize-transparent-cache-ioredis": "^1.0.1"
+  }
+}

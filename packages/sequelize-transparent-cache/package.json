@@ -1,10 +1,11 @@
 {
   "name": "sequelize-transparent-cache",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "lib/index.js",
   "scripts": {
-    "test": "tap test/*.js -R spec"
+    "test": "tap test/*.js -R spec --coverage --coverage-report=lcov",
+    "test:upload": "codecov"
   },
   "keywords": [
     "sequelize",
@@ -24,13 +25,14 @@
     "sequelize": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "codecov": "^2.2.0",
+    "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "sequelize": "^3.30.4",
+    "sequelize": "^3.0.0 || ^4.0.0",
     "sequelize-transparent-cache-variable": "^1.0.0",
     "sqlite3": "^3.1.8",
     "tap": "^10.3.2"

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=1
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=database
+    ports:
+      - 3306:3306
+  cache:
+    image: redis:alpine
+    ports:
+      - 6379:6379

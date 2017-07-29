@@ -1,13 +1,12 @@
 const { instanceToData, dataToInstance } = require('./util')
 
-function getModelName (instance) {
+function getInstanceModel (instance) {
   const version = instance.sequelize.Sequelize.version
 
-  if (version.startsWith('4')) {
-    return instance.constructor.name
-  }
-
-  return instance.Model.name
+  /* istanbul ignore next: covered, but depends on installed sequelize version */
+  return version.startsWith('4')
+    ? instance.constructor
+    : instance.Model
 }
 
 function save (client, instance) {
@@ -16,7 +15,7 @@ function save (client, instance) {
   }
 
   const key = [
-    getModelName(instance),
+    getInstanceModel(instance).name,
     instance.id
   ]
 
@@ -40,7 +39,7 @@ function destroy (client, instance) {
   }
 
   const key = [
-    getModelName(instance),
+    getInstanceModel(instance).name,
     instance.id
   ]
 
