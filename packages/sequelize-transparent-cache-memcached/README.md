@@ -16,19 +16,6 @@ const memcachedAdaptor = new MemcachedAdaptor({
   namespace: 'model', // optional
   lifetime: 60 * 60
 })
-
-const sequelizeCache = require('sequelize-transparent-cache')
-const {classMethods, instanceMethods} = sequelizeCache(memcachedAdaptor)
-
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('database', 'user', 'password', {
-  host: 'localhost',
-  port: 3306,
-  define: {
-    classMethods,
-    instanceMethods
-  }
-})
 ```
 
 ## Constructor arguments
