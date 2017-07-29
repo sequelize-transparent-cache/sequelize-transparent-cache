@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache-ioredis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ioredis adaptor for sequelize-transparent-cache",
   "main": "IORedisAdaptor.js",
   "keywords": [
@@ -9,11 +9,12 @@
     "redis",
     "ioredis",
     "plugin",
+    "adaptor",
     "adapter"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SDSWanderer/sequelize-transparent-cache-ioredis.git"
+    "url": "https://github.com/DanielHreben/sequelize-transparent-cache-ioredis.git"
   },
   "author": {
     "name": "Daniel Hreben",
@@ -21,7 +22,7 @@
   },
   "license": "CC-BY-4.0",
   "peerDependencies": {
-    "sequelize-transparent-cache": "^1.0.0",
+    "sequelize-transparent-cache": "^1.0.0 || ^1.1.0",
     "ioredis": "^3.1.1"
   },
   "devDependencies": {

@@ -17,18 +17,6 @@ const redisAdaptor = new RedisAdaptor({
   lifetime: 60 * 60   // optional
 })
 
-const sequelizeCache = require('sequelize-transparent-cache')
-const {classMethods, instanceMethods} = sequelizeCache(redisAdaptor)
-
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('database', 'user', 'password', {
-  host: 'localhost',
-  port: 3306,
-  define: {
-    classMethods,
-    instanceMethods
-  }
-})
 ```
 
 ## Constructor arguments
