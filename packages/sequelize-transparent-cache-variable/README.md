@@ -13,19 +13,6 @@ const VariableAdaptor = require('sequelize-transparent-cache-variable')
 const variableAdaptor = new VariableAdaptor({
   store: {} // optional
 })
-
-const sequelizeCache = require('sequelize-transparent-cache')
-const {classMethods, instanceMethods} = sequelizeCache(variableAdaptor)
-
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize('database', 'user', 'password', {
-  host: 'localhost',
-  port: 3306,
-  define: {
-    classMethods,
-    instanceMethods
-  }
-})
 ```
 
 ## Constructor arguments
