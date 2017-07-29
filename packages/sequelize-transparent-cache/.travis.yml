@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - "7"
+  - "8"
+
+script:
+  - npm test
+after_success:
+  - npm run test:upload
