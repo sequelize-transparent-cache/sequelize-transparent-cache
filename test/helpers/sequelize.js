@@ -5,51 +5,32 @@ const sequelizeCache = require('../../lib')
 
 const Sequelize = require('sequelize')
 
-if (Sequelize.version.startsWith('3')) {
-  console.warn('Running test using sequelize v3')
-  const { classMethods, instanceMethods } = sequelizeCache(variableAdaptor)
-
-  const Sequelize = require('sequelize')
-  const sequelize = new Sequelize({
-    logging: false,
-    dialect: 'sqlite',
-    define: {
-      options: { paranoid: true },
-      classMethods,
-      instanceMethods
-    }
-  })
-
-  sequelize.define('User', {
-    name: {
-      allowNull: false,
-      type: Sequelize.STRING
-    }
-  })
-
-  module.exports = sequelize
+const options = {
+  logging: false,
+  dialect: 'sqlite',
+  define: {
+    options: { paranoid: true }
+  }
 }
 
-if (Sequelize.version.startsWith('4')) {
-  console.warn('Running test using sequelize v4')
+if (Sequelize.version.startsWith('3')) { // Using global define
+  const { instanceMethods, classMethods } = sequelizeCache(variableAdaptor)
+  options.define.instanceMethods = instanceMethods
+  options.define.classMethods = classMethods
+}
+
+const sequelize = new Sequelize(options)
+
+sequelize.define('User', {
+  name: {
+    allowNull: false,
+    type: Sequelize.STRING
+  }
+})
+
+if (Sequelize.version.startsWith('4')) { // Using class extention
   const { withCache } = sequelizeCache(variableAdaptor)
-
-  const sequelize = new Sequelize({
-    logging: false,
-    dialect: 'sqlite',
-    define: {
-      options: { paranoid: true }
-    }
-  })
-
-  sequelize.define('User', {
-    name: {
-      allowNull: false,
-      type: Sequelize.STRING
-    }
-  })
-
   withCache(sequelize.models.User)
-
-  module.exports = sequelize
 }
+
+module.exports = sequelize
