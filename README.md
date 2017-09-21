@@ -71,7 +71,7 @@ sequelize.sync()
 
 Look for all examples applications in `examples` folder.
 * [Usage with sequelize v3 and memcached](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/sequelize-v3-memcached)
-* [Usage with sequelize v4 and ioredis](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/sequelize-v4-ioredis)
+* [Usage with sequelize v4 and ioredis](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/sequelize-v4-redis)
 
 
 ## Methods
