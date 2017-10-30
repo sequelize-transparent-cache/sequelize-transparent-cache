@@ -25,12 +25,24 @@ sequelize.define('User', {
   name: {
     allowNull: false,
     type: Sequelize.STRING
+  },
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  }
+})
+
+sequelize.define('Person', {
+  name: {
+    allowNull: false,
+    type: Sequelize.STRING
   }
 })
 
 if (Sequelize.version.startsWith('4')) { // Using class extention
   const { withCache } = sequelizeCache(variableAdaptor)
   withCache(sequelize.models.User)
+  withCache(sequelize.models.Person)
 }
 
 module.exports = sequelize
