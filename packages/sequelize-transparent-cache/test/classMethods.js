@@ -29,7 +29,6 @@ t.test('Instance methods', async t => {
       user.get(),
       'User with primary key cached after create'
     )
-    console.log(cacheStore)
     t.deepEqual(
       cacheStore.Person[1],
       mike.get(),

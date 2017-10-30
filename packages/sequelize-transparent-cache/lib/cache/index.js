@@ -10,30 +10,18 @@ function getInstanceModel (instance) {
 }
 
 function getModelPrimaryKeys (instance) {
-  return getInstanceModel(instance).describe().then(
-    (schema) => {
-      return Object.keys(schema).filter(function (field) {
-        return schema[field].primaryKey
-      })
-    }
-  ).then(
-    (keys) => keys.map((k) => instance[k])
-  )
+  return getInstanceModel(instance).primaryKeyAttributes.map((k) => instance[k])
 }
 
 function save (client, instance) {
   if (!instance) {
     return instance
   }
-  return getModelPrimaryKeys(instance).then(
-    (keys) => {
-      const key = [
-        getInstanceModel(instance).name,
-        ...keys
-      ]
-      return client.set(key, instanceToData(instance)).then(() => instance)
-    }
-  )
+  const key = [
+    getInstanceModel(instance).name,
+    ...getModelPrimaryKeys(instance)
+  ]
+  return client.set(key, instanceToData(instance)).then(() => instance)
 }
 
 function get (client, model, id) {
@@ -52,15 +40,11 @@ function destroy (client, instance) {
     return instance
   }
 
-  return getModelPrimaryKeys(instance).then(
-    (keys) => {
-      const key = [
-        getInstanceModel(instance).name,
-        keys
-      ]
-      return client.del(key)
-    }
-  )
+  const key = [
+    getInstanceModel(instance).name,
+    ...getModelPrimaryKeys(instance)
+  ]
+  return client.del(key)
 }
 
 module.exports = {
