@@ -9,20 +9,20 @@ class VariableAdaptor {
     }
   }
 
-  set ([model, id], value) {
+  set ([model, ...id], value) {
     this._ensureModel(model)
 
     this.store[model][id] = value
     return Promise.resolve()
   }
 
-  get ([model, id]) {
+  get ([model, ...id]) {
     this._ensureModel(model)
 
     return Promise.resolve(this.store[model][id])
   }
 
-  del ([model, id]) {
+  del ([model, ...id]) {
     this._ensureModel(model)
 
     delete this.store[model][id]

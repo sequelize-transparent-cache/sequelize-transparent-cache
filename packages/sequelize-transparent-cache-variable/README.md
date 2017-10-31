@@ -22,12 +22,31 @@ const variableAdaptor = new VariableAdaptor({
 | `store` | object | no       | Object to store sequelize instances |
 
 ## Storing format
-Each object stored as is, keyed by id.
+Each object stored as is, keyed by id (Primary Key).
 
 ```javascript
+adaptor.set(['modelName', 'objectId']);
+```
+store structure:
+```javascript
 {
-  modelName: {
-    objectId: {...}
+  "modelName": {
+    "objectId": {...}
+  }
+}
+```
+
+If object has multiple primary keys, object will be stored as is, keyed
+by concatenated Ids separated by comma.
+
+```javascript
+adaptor.set(['modelName', 'objectId1', 'objectId2']);
+```
+store structure will be:
+```javascript
+{
+  "modelName": {
+    "objectId1,objectId2": {...}
   }
 }
 ```
