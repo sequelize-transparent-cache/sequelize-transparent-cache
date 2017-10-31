@@ -25,15 +25,33 @@ sequelize.define('User', {
   name: {
     allowNull: false,
     type: Sequelize.STRING
-  },
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true
   }
 })
 
-sequelize.define('Person', {
-  name: {
+sequelize.define('Article', {
+  uuid: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  title: {
+    allowNull: false,
+    type: Sequelize.STRING
+  }
+})
+
+sequelize.define('Comment', {
+  user_id: {
+    allowNull: false,
+    type: Sequelize.INTEGER,
+    primaryKey: true
+  },
+  article_uuid: {
+    allowNull: false,
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  body: {
     allowNull: false,
     type: Sequelize.STRING
   }
@@ -42,7 +60,8 @@ sequelize.define('Person', {
 if (Sequelize.version.startsWith('4')) { // Using class extention
   const { withCache } = sequelizeCache(variableAdaptor)
   withCache(sequelize.models.User)
-  withCache(sequelize.models.Person)
+  withCache(sequelize.models.Article)
+  withCache(sequelize.models.Comment)
 }
 
 module.exports = sequelize
