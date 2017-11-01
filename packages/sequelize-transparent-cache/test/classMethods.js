@@ -22,8 +22,8 @@ t.test('Instance methods', async t => {
   })
 
   const comment = await Comment.cache().create({
-    user_id: user.id,
-    article_uuid: article.uuid,
+    userId: user.id,
+    articleUuid: article.uuid,
     body: 'New comment'
   })
   t.test('Create', async t => {
@@ -38,7 +38,7 @@ t.test('Instance methods', async t => {
       'Entity with custom primary key cached after create'
     )
     t.deepEqual(
-      cacheStore.Comment[`${comment.user_id},${comment.article_uuid}`],
+      cacheStore.Comment[`${comment.userId},${comment.articleUuid}`],
       comment.get(),
       'Entity with composite primary keys cached after create'
     )

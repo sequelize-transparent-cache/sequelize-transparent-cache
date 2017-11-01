@@ -9,8 +9,8 @@ function getInstanceModel (instance) {
     : instance.Model
 }
 
-function getModelCacheKeys (instance) {
-  return getInstanceModel(instance).primaryKeyAttributes.map((k) => instance[k])
+function getInstanceCacheKey (instance) {
+  return getInstanceModel(instance).primaryKeyAttributes.map(pk => instance[pk])
 }
 
 function save (client, instance) {
@@ -19,7 +19,7 @@ function save (client, instance) {
   }
   const key = [
     getInstanceModel(instance).name,
-    ...getModelCacheKeys(instance)
+    ...getInstanceCacheKey(instance)
   ]
   return client.set(key, instanceToData(instance)).then(() => instance)
 }
@@ -42,7 +42,7 @@ function destroy (client, instance) {
 
   const key = [
     getInstanceModel(instance).name,
-    ...getModelCacheKeys(instance)
+    ...getInstanceCacheKey(instance)
   ]
   return client.del(key)
 }
