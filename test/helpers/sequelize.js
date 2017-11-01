@@ -41,12 +41,12 @@ sequelize.define('Article', {
 })
 
 sequelize.define('Comment', {
-  user_id: {
+  userId: {
     allowNull: false,
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  article_uuid: {
+  articleUuid: {
     allowNull: false,
     type: Sequelize.STRING,
     primaryKey: true
