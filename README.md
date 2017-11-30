@@ -1,13 +1,12 @@
 # sequelize-transparent-cache
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/DanielHreben/sequelize-transparent-cache.svg)](https://greenkeeper.io/)
-
 [![Build Status](https://travis-ci.org/DanielHreben/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/DanielHreben/sequelize-transparent-cache)
 [![Coverage Status](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Code Climate](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache)
 [![npm version](https://badge.fury.io/js/sequelize-transparent-cache.svg)](https://badge.fury.io/js/sequelize-transparent-cache)
 [![Dependency Status](https://david-dm.org/DanielHreben/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
+[![Greenkeeper badge](https://badges.greenkeeper.io/DanielHreben/sequelize-transparent-cache.svg)](https://greenkeeper.io/)
 
 Simple to use and universal cache layer for Sequelize.
 * Abstract: does not depends on underlying database, or cache specific
