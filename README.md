@@ -1,5 +1,7 @@
 # sequelize-transparent-cache
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/DanielHreben/sequelize-transparent-cache.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/DanielHreben/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/DanielHreben/sequelize-transparent-cache)
 [![Coverage Status](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
