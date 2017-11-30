@@ -18,10 +18,12 @@ Simple to use and universal cache layer for Sequelize.
 ## Installation
 
 Install sequelize-transparent-cache itself:
+
 ```npm install --save sequelize-transparent-cache```
 
 Find and install appropriate adaptor for your cache system, see "Available adaptors" section below.
-In this his example we will use [ioredis](https://www.npmjs.com/package/ioredis)
+In this example we will use [ioredis](https://www.npmjs.com/package/ioredis)
+
 ```npm install --save sequelize-transparent-cache-ioredis```
 
 ## Example usage
