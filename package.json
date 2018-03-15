@@ -34,7 +34,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "sequelize": "^3.0.0 || ^4.0.0",
     "sequelize-transparent-cache-variable": "^1.0.3",
-    "sqlite3": "^3.1.8",
+    "sqlite3": "^4.0.0",
     "tap": "^10.3.2"
   },
   "eslintConfig": {
