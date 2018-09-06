@@ -26,18 +26,18 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 const User = sequelize.import('./models/user')
 
 sequelize.sync()
-.then(() => {
-  return User.cache().create({ // Create user in db and in cache
-    id: 1,
-    name: 'Daniel'
+  .then(() => {
+    return User.cache().create({ // Create user in db and in cache
+      id: 1,
+      name: 'Daniel'
+    })
   })
-})
-.then(() => {
-  return User.cache().findById(1) // Load user from cache
-})
-.then(user => {
-  return user.cache().update({ // Update in db and cache
-    name: 'Vikki'
+  .then(() => {
+    return User.cache().findById(1) // Load user from cache
   })
-})
-.then(() => process.exit())
+  .then(user => {
+    return user.cache().update({ // Update in db and cache
+      name: 'Vikki'
+    })
+  })
+  .then(() => process.exit())
