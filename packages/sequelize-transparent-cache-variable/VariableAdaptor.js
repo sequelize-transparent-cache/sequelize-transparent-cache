@@ -25,7 +25,7 @@ class VariableAdaptor {
   del ([model, ...ids]) {
     this._ensureModel(model)
 
-    delete this.store[model][id.join()]
+    delete this.store[model][ids.join()]
     Promise.resolve()
   }
 }

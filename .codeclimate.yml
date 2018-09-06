@@ -9,7 +9,7 @@ engines:
 
 ratings:
   paths:
-  - lib/**
+  - packages/**
 
 exclude_paths:
 - "examples/"
