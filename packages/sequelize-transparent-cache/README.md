@@ -98,6 +98,7 @@ In addition, both objects will contain `client()` method to get cache adaptor.
 ## Available adaptors
 
 * [memcached](https://www.npmjs.com/package/sequelize-transparent-cache-memcached)
+* [memcache-plus](https://www.npmjs.com/package/sequelize-transparent-cache-memcache-plus)
 * [ioredis](https://www.npmjs.com/package/sequelize-transparent-cache-ioredis)
 * [variable](https://www.npmjs.com/package/sequelize-transparent-cache-variable)
 
