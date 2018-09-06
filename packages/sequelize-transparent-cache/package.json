@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "lib/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "sequelize": "^3.0.0 || ^4.0.0",
-    "sequelize-transparent-cache-variable": "^1.2.1",
+    "sequelize-transparent-cache-variable": "^1.2.2",
     "sqlite3": "^4.0.2",
     "tap": "^12.0.1"
   }
