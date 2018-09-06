@@ -12,5 +12,5 @@ ratings:
   - packages/**
 
 exclude_paths:
-- "examples/"
-- "test/"
+- examples/
+- test/

@@ -1,0 +1,1 @@
+./packages/sequelize-transparent-cache/README.md
