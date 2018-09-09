@@ -3,7 +3,7 @@ const t = require('tap')
 const MemcachePlus = require('memcache-plus')
 const memcachePlus = new MemcachePlus()
 
-const MemcachePlusAdaptor = require('../MemcachedPlusAdaptor')
+const MemcachePlusAdaptor = require('../MemcachePlusAdaptor')
 const memcachePlusAdaptor = new MemcachePlusAdaptor({
   client: memcachePlus,
   namespace: 'model',
