@@ -11,16 +11,19 @@ function classMethods (client, model) {
         return cache.save(client, instance)
       })
     },
-    findById (id) {
+    findByPk (id) {
       return cache.get(client, model, id)
       .then(instance => {
         if (instance) {
           return instance
         }
 
-        return model.findById.apply(model, arguments)
+        return (model.findByPk || model.findById).apply(model, arguments)
         .then(instance => cache.save(client, instance))
       })
+    },
+    findById () {
+      return this.findByPk.apply(this, arguments)
     },
     upsert (data) {
       return model.upsert.apply(model, arguments).then(created => {
