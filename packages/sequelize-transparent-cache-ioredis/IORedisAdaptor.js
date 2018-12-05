@@ -33,7 +33,11 @@ class IORedisAdaptor {
         return data
       }
 
-      return JSON.parse(data)
+      return JSON.parse(data, (key, value) => {
+        return value && value.type === 'Buffer' ?
+          Buffer.from(value.data) :
+          value;
+      })
     })
   }
 
