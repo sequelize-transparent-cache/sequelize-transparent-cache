@@ -7,18 +7,11 @@ function dataToInstance (model, data) {
     return data
   }
   let include = []
+
   if (model.associations) {
-    Object.keys(model.associations).forEach((key) => {
-      const association = {}
-      //  model.associations[key] does not work on include, we grab it from sequelize.model()
-      if (model.associations[key].hasOwnProperty('options')) {
-        let modelName = model.associations[key].options.name.singular
-        association.model = model.sequelize.model(modelName)
-        association.as = key
-      }
-      include.push(association)
-    })
+    include = loadAssociations(model)
   }
+
   const instance = model.build(data, { isNewRecord: false, include })
 
   if (data.updatedAt) {
@@ -34,6 +27,21 @@ function dataToInstance (model, data) {
   }
 
   return instance
+}
+
+function loadAssociations (model) {
+  const associations = []
+  Object.keys(model.associations).forEach((key) => {
+    const association = {}
+    //  model.associations[key] does not work on include, we grab it from sequelize.model()
+    if (model.associations[key].hasOwnProperty('options')) {
+      let modelName = model.associations[key].options.name.singular
+      association.model = model.sequelize.model(modelName)
+      association.as = key
+    }
+    associations.push(association)
+  })
+  return associations
 }
 
 module.exports = {

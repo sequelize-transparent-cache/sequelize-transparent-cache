@@ -41,16 +41,6 @@ sequelize.define('Article', {
 })
 
 sequelize.define('Comment', {
-  userId: {
-    allowNull: false,
-    type: Sequelize.INTEGER,
-    primaryKey: true
-  },
-  articleUuid: {
-    allowNull: false,
-    type: Sequelize.STRING,
-    primaryKey: true
-  },
   body: {
     allowNull: false,
     type: Sequelize.STRING
@@ -63,5 +53,10 @@ if (Sequelize.version.startsWith('4')) { // Using class extention
   withCache(sequelize.models.Article)
   withCache(sequelize.models.Comment)
 }
+
+sequelize.model('User').hasMany(sequelize.model('Comment'), { as: 'Comments' })
+sequelize.model('Article').hasMany(sequelize.model('Comment'), { as: 'Comments' })
+sequelize.model('Comment').belongsTo(sequelize.model('User'), { as: 'User' })
+sequelize.model('Comment').belongsTo(sequelize.model('Article'), { as: 'Article' })
 
 module.exports = sequelize
