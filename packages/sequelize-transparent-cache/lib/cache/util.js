@@ -30,7 +30,7 @@ function dataToInstance (model, data) {
 }
 
 function loadAssociations (model) {
-  const associations = []
+  let associations = []
   Object.keys(model.associations).forEach((key) => {
     const association = {}
     //  model.associations[key] does not work on include, we grab it from sequelize.model()
@@ -38,8 +38,8 @@ function loadAssociations (model) {
       let modelName = model.associations[key].options.name.singular
       association.model = model.sequelize.model(modelName)
       association.as = key
+      associations.push(association)
     }
-    associations.push(association)
   })
   return associations
 }
