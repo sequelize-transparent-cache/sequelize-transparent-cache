@@ -1,12 +1,12 @@
-function instanceToData (instance) {
+function instanceToData(instance) {
   return instance.get({ plain: true })
 }
 
-function dataToInstance (model, data) {
+function dataToInstance(model, data) {
   if (!data) {
     return data
   }
-  let include = []
+  const include = []
 
   if (model.associations) {
     include = loadAssociations(model)
@@ -29,8 +29,8 @@ function dataToInstance (model, data) {
   return instance
 }
 
-function loadAssociations (model) {
-  let associations = []
+function loadAssociations(model) {
+  const associations = []
   Object.keys(model.associations).forEach((key) => {
     //  model.associations[key] does not work on include, we grab it from sequelize.model()
     if (model.associations[key].hasOwnProperty('options')) {
