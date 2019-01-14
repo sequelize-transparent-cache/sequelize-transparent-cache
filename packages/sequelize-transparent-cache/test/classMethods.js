@@ -20,6 +20,8 @@ t.test('Instance methods', async t => {
     uuid: '2086c06e-9dd9-4ee3-84b9-9e415dfd9c4c',
     title: 'New article'
   })
+  await user.setArticles([article])
+  await user.cache().save()
 
   const comment = await Comment.cache().create({
     userId: user.id,
@@ -66,7 +68,7 @@ t.test('Instance methods', async t => {
       (await User.cache().findById(1)).get(),
       (await User.findById(1)).get(),
       'Timestamps synced after upsert',
-      {skip: true}
+      { skip: true }
     )
 
     await user.cache().reload()
@@ -82,5 +84,13 @@ t.test('Instance methods', async t => {
 
   t.test('FindById', async t => {
     t.is(await User.cache().findById(2), null, 'Cache miss not causing any problem')
+
+    delete cacheStore.User[1]
+    // Deleted so first find goes directly to DB & and second one retrieves from cache with association
+    t.is(
+      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
+      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
+      'Retrieved user with Article association'
+    )
   })
 })

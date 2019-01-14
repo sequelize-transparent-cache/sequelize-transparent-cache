@@ -64,4 +64,7 @@ if (Sequelize.version.startsWith('4')) { // Using class extention
   withCache(sequelize.models.Comment)
 }
 
+sequelize.model('User').hasMany(sequelize.model('Article'), { as: 'Articles' })
+sequelize.model('Article').belongsTo(sequelize.model('User'), { as: 'User' })
+
 module.exports = sequelize
