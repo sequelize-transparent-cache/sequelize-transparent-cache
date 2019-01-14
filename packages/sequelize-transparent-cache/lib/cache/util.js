@@ -32,13 +32,13 @@ function dataToInstance (model, data) {
 function loadAssociations (model) {
   let associations = []
   Object.keys(model.associations).forEach((key) => {
-    const association = {}
     //  model.associations[key] does not work on include, we grab it from sequelize.model()
     if (model.associations[key].hasOwnProperty('options')) {
-      let modelName = model.associations[key].options.name.singular
-      association.model = model.sequelize.model(modelName)
-      association.as = key
-      associations.push(association)
+      const modelName = model.associations[key].options.name.singular
+      associations.push({
+        model: model.sequelize.model(modelName),
+        as: key
+      })
     }
   })
   return associations
