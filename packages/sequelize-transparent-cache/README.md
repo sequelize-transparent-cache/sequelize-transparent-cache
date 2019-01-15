@@ -89,7 +89,8 @@ Instance:
 
 Model:
   * [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
-  * [`findById()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findById)
+  * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
+  * [`findById()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
   * [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
   * [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
 
