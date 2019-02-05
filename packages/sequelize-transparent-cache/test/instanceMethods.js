@@ -43,6 +43,19 @@ t.test('Instance methods', async t => {
       'User cached afrer upsert'
     )
   })
+  t.test('Clear', async t => {
+    t.deepEqual(
+      (await User.cache().findById(1)).get(),
+      user.get(),
+      'Cached user correctly loaded'
+    )
+    await user.cache().clear()
+
+    t.notOk(
+      cacheStore.User[1],
+      'User was deleted from cache'
+    )
+  })
 
   t.test('Destroy', async t => {
     await user.cache().destroy()
