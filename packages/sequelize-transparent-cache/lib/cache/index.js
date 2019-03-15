@@ -13,14 +13,20 @@ function getInstanceCacheKey (instance) {
   return getInstanceModel(instance).primaryKeyAttributes.map(pk => instance[pk])
 }
 
-function save (client, instance) {
+function save (client, instance, customId) {
   if (!instance) {
     return instance
   }
-  const key = [
-    getInstanceModel(instance).name,
-    ...getInstanceCacheKey(instance)
-  ]
+  let key = [getInstanceModel(instance).name]
+  if (customId !== undefined) {
+    key.push(
+      customId
+    )
+  } else {
+    key.push(
+      ...getInstanceCacheKey(instance)
+    )
+  }
   return client.set(key, instanceToData(instance)).then(() => instance)
 }
 
@@ -47,8 +53,17 @@ function destroy (client, instance) {
   return client.del(key)
 }
 
+function clearKey (client, model, customKey) {
+  const key = [
+    model.name,
+    customKey
+  ]
+  return client.del(key)
+}
+
 module.exports = {
   save,
   get,
-  destroy
+  destroy,
+  clearKey
 }
