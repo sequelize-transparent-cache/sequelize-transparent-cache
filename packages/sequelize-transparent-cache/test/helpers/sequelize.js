@@ -14,9 +14,10 @@ const options = {
 }
 
 if (Sequelize.version.startsWith('3')) { // Using global define
-  const { instanceMethods, classMethods } = sequelizeCache(variableAdaptor)
+  const { instanceMethods, classMethods, manualCacheMethods } = sequelizeCache(variableAdaptor)
   options.define.instanceMethods = instanceMethods
   options.define.classMethods = classMethods
+  options.define.manualCacheMethods = manualCacheMethods
 }
 
 const sequelize = new Sequelize(options)
