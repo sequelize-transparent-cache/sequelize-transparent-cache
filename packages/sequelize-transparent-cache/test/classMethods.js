@@ -135,12 +135,10 @@ t.test('Class methods', async t => {
       'User cached afrer find and present in key'
     )
 
-    await User.manualCache(key).clear();
+    await User.manualCache(key).clear()
     t.notOk(
       cacheStore.User[key],
       'User was deleted from cache'
     )
   })
-
-
 })

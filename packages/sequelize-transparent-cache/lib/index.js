@@ -23,19 +23,13 @@ module.exports = function (client) {
       return modelClass
     },
     classMethods: {
-      cache () {
-        return classMethods(client, this)
-      }
+      cache () { return classMethods(client, this) }
     },
     manualCacheMethods: {
-      manualCache (customId) {
-        return manualCacheMethods(client, this, customId)
-      }
+      manualCache (customId) { return manualCacheMethods(client, this, customId) }
     },
     instanceMethods: {
-      cache () {
-        return instanceMethods(client, this)
-      }
+      cache () { return instanceMethods(client, this) }
     }
   }
 }
