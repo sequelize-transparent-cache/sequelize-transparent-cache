@@ -6,7 +6,7 @@ const Article = sequelize.models.Article
 const Comment = sequelize.models.Comment
 const cacheStore = User.cache().client().store
 
-t.test('Instance methods', async t => {
+t.test('Class methods', async t => {
   await sequelize.sync()
 
   t.deepEqual(cacheStore, {}, 'Cache is empty on start')
@@ -91,6 +91,54 @@ t.test('Instance methods', async t => {
       (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
       (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
       'Retrieved user with Article association'
+    )
+  })
+
+  t.test('manualCache -> find', async t => {
+    t.is(await User.manualCache('sasas').find({ where: { name: 'Not existent' } }), null, 'Cache miss not causing any problem')
+
+    const key = 'IvanUserCacheKey'
+    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    t.is(
+      manualTest.get().Articles[0].get().uuid,
+      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
+      'Retrieved User with Article association using find method'
+    )
+
+    delete cacheStore.User[key]
+    const secondManualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    const thirdManualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    t.is(
+      secondManualTest.get().Articles[0].get().uuid,
+      thirdManualTest.get().Articles[0].get().uuid,
+      'Retrieved User with Article association from DB and cache'
+    )
+  })
+
+  t.test('manualCache -> cache store', async t => {
+    const key = 'ClearStoreUserCacheKey'
+    const manualCacheStore = User.manualCache().client().store
+    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' } })
+    t.deepEqual(
+      manualCacheStore.User[key],
+      manualTest.get(),
+      'User cached afrer find and present in key using manualCache store'
+    )
+  })
+
+  t.test('manualCache -> clear', async t => {
+    const key = 'ClearUserCacheKey'
+    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' } })
+    t.deepEqual(
+      cacheStore.User[key],
+      manualTest.get(),
+      'User cached afrer find and present in key'
+    )
+
+    await User.manualCache(key).clear()
+    t.notOk(
+      cacheStore.User[key],
+      'User was deleted from cache'
     )
   })
 })
