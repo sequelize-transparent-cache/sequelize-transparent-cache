@@ -37,4 +37,28 @@ function classMethods (client, model) {
   }
 }
 
-module.exports = classMethods
+function manualCacheMethods (client, model, customKey) {
+  return {
+    client () {
+      return client
+    },
+    findAll () {
+      return cache.get(client, model, customKey)
+        .then(instance => {
+          if (instance) {
+            return instance
+          }
+          return model.find.apply(model, arguments)
+            .then(instance => cache.save(client, instance, customKey))
+        })
+    },
+    find () {
+      return this.findAll.apply(this, arguments)
+    },
+    clear () {
+      return cache.clearKey(client, model, customKey)
+    }
+  }
+}
+
+module.exports = { classMethods, manualCacheMethods }
