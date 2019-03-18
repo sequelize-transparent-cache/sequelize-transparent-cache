@@ -1,0 +1,12 @@
+{
+  "name": "sequelize-v3-memcached",
+  "main": "app.js",
+  "dependencies": {
+    "memcached": "^2.2.2",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.1.0",
+    "sequelize-transparent-cache": "^2.0.0",
+    "sequelize-transparent-cache-memcached": "^1.2.2"
+  }
+}

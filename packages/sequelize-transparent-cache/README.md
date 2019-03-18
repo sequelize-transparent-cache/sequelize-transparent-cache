@@ -26,9 +26,6 @@ In this example we will use [ioredis](https://www.npmjs.com/package/ioredis)
 ```npm install --save sequelize-transparent-cache-ioredis```
 
 ## Example usage
-**PLEASE NOTE:** there are differences in connecting this library with sequelize v3 and v4, regarding removed `classMethods` and `instanceMethods` support in v4.
-**Next example is for sequelize v4:**
-
 ```javascript
 const Redis = require('ioredis')
 const redis = new Redis()
@@ -73,8 +70,8 @@ sequelize.sync()
 ```
 
 Look for all examples applications in `examples` folder.
-* [Usage with sequelize v3 and memcached](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/sequelize-v3-memcached)
-* [Usage with sequelize v4 and ioredis](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/sequelize-v4-redis)
+* [Usage with memcached](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/memcached-mysql)
+* [Usage with ioredis](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/redis-mysql)
 
 
 ## Methods
@@ -89,7 +86,6 @@ Instance:
 
 Model:
   * [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
-  * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
   * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
   * [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
   * [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**

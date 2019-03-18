@@ -95,46 +95,66 @@ t.test('Class methods', async t => {
   })
 
   t.test('manualCache -> findAll', async t => {
+    const missingUsers = await User.manualCache('missingKey1').findAll({ where: { name: 'Not existent' } })
+
     t.same(
-      await User.manualCache('missing-key-1').findAll({ where: { name: 'Not existent' } }),
+      missingUsers,
       [],
       'Cache miss not causing any problem'
     )
 
     const key = 'IvanUserCacheKey1'
-    const [ivanUserFromCache] = await User.manualCache(key).findAll({
+    const getQuery = () => ({
       where: { name: 'Ivan' },
       include: [{ model: Article, as: 'Articles' }]
     })
 
-    const ivanUserFromDB = await User.findByPk(1, {
-      include: [{ model: Article, as: 'Articles' }]
-    })
+    const [cacheMiss] = await User.manualCache(key).findAll(getQuery())
+    const [cacheHit] = await User.manualCache(key).findAll(getQuery())
+    const [dbValue] = await User.findAll(getQuery())
 
     t.is(
-      ivanUserFromCache.get().Articles[0].get().uuid,
-      ivanUserFromDB.get().Articles[0].get().uuid,
-      'Retrieved User with Article association using findAll method'
+      cacheMiss.get().Articles[0].get().uuid,
+      cacheHit.get().Articles[0].get().uuid,
+      'Returned value is the same, not matter if cache hit or miss'
+    )
+
+    t.is(
+      cacheHit.get().Articles[0].get().uuid,
+      dbValue.get().Articles[0].get().uuid,
+      'Returned value is the same, as in db'
     )
   })
 
   t.test('manualCache -> findOne', async t => {
-    const user = await User.manualCache('missing-key-2').findOne({ where: { name: 'Not existent' } })
+    const missingUser = await User.manualCache('MissingKey2').findOne({ where: { name: 'Not existent' } })
 
     t.same(
-      user,
+      missingUser,
       null,
       'Cache miss not causing any problem'
     )
 
     const key = 'IvanUserCacheKey2'
-    const ivanUserFromCache = await User.manualCache(key).findOne({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
-    const ivanUserFromDB = await User.findOne({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    const getQuery = () => ({
+      where: { name: 'Ivan' },
+      include: [{ model: Article, as: 'Articles' }]
+    })
+
+    const cacheMiss = await User.manualCache(key).findOne(getQuery())
+    const cacheHit = await User.manualCache(key).findOne(getQuery())
+    const dbValue = await User.findOne(getQuery())
 
     t.is(
-      ivanUserFromCache.get().Articles[0].get().uuid,
-      ivanUserFromDB.get().Articles[0].get().uuid,
-      'Retrieved User with Article association using findOne method'
+      cacheMiss.get().Articles[0].get().uuid,
+      cacheHit.get().Articles[0].get().uuid,
+      'Returned value is the same, not matter if cache hit or miss'
+    )
+
+    t.is(
+      cacheHit.get().Articles[0].get().uuid,
+      dbValue.get().Articles[0].get().uuid,
+      'Returned value is the same, as in db'
     )
   })
 

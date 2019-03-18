@@ -10,20 +10,17 @@ const memcachedAdaptor = new MemcachedAdaptor({
 })
 
 const sequelizeCache = require('sequelize-transparent-cache')
-const { classMethods, instanceMethods } = sequelizeCache(memcachedAdaptor)
+const { withCache } = sequelizeCache(memcachedAdaptor)
 
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('database', 'user', 'password', {
+  dialect: 'mysql',
   host: 'localhost',
-  port: 3306,
-  define: { // That way we register .cache() method for all models and instances in sequelize v3
-    classMethods,
-    instanceMethods
-  }
+  port: 3306
 })
 
 // Register your models
-const User = sequelize.import('./models/user')
+const User = withCache(sequelize.import('./models/user'))
 
 sequelize.sync()
   .then(() => {

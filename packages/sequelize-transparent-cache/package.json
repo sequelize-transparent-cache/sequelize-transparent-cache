@@ -24,7 +24,7 @@
     "sequelize": ">=4.0.0"
   },
   "devDependencies": {
-    "sequelize": "^5.1.0",
+    "sequelize": ">=4.0.0",
     "sequelize-transparent-cache-variable": "^1.2.2",
     "sqlite3": "^4.0.6",
     "tap": "^12.6.0"
