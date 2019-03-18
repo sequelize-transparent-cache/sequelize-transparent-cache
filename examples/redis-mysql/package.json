@@ -6,6 +6,6 @@
     "mysql2": "^1.6.5",
     "sequelize": "^5.1.0",
     "sequelize-transparent-cache": "^2.0.0",
-    "sequelize-transparent-cache-ioredis": "^1.2.6"
+    "sequelize-transparent-cache-ioredis": "^2.0.0"
   }
 }

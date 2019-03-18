@@ -7,6 +7,6 @@
     "mysql2": "^1.6.5",
     "sequelize": "^5.1.0",
     "sequelize-transparent-cache": "^2.0.0",
-    "sequelize-transparent-cache-memcached": "^1.2.2"
+    "sequelize-transparent-cache-memcached": "^2.0.0"
   }
 }

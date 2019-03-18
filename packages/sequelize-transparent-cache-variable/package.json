@@ -20,6 +20,6 @@
   },
   "license": "CC-BY-4.0",
   "peerDependencies": {
-    "sequelize-transparent-cache": "^1.2.0"
+    "sequelize-transparent-cache": "^2.0.0"
   }
 }
