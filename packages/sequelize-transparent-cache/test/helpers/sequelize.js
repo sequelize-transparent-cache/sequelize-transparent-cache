@@ -13,13 +13,6 @@ const options = {
   }
 }
 
-if (Sequelize.version.startsWith('3')) { // Using global define
-  const { instanceMethods, classMethods, manualCacheMethods } = sequelizeCache(variableAdaptor)
-  options.define.instanceMethods = instanceMethods
-  options.define.classMethods = classMethods
-  options.define.manualCacheMethods = manualCacheMethods
-}
-
 const sequelize = new Sequelize(options)
 
 sequelize.define('User', {
@@ -58,12 +51,10 @@ sequelize.define('Comment', {
   }
 })
 
-if (Sequelize.version.startsWith('4')) { // Using class extention
-  const { withCache } = sequelizeCache(variableAdaptor)
-  withCache(sequelize.models.User)
-  withCache(sequelize.models.Article)
-  withCache(sequelize.models.Comment)
-}
+const { withCache } = sequelizeCache(variableAdaptor)
+withCache(sequelize.models.User)
+withCache(sequelize.models.Article)
+withCache(sequelize.models.Comment)
 
 sequelize.model('User').hasMany(sequelize.model('Article'), { as: 'Articles' })
 sequelize.model('Article').belongsTo(sequelize.model('User'), { as: 'User' })

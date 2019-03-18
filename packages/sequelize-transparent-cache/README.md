@@ -62,7 +62,7 @@ sequelize.sync()
   })
 })
 .then(() => {
-  return User.cache().findById(1) // Load user from cache
+  return User.cache().findByPk(1) // Load user from cache
 })
 .then(user => {
   return user.cache().update({ // Update in db and cache
@@ -90,7 +90,7 @@ Instance:
 Model:
   * [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
   * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
-  * [`findById()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
+  * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
   * [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
   * [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
 

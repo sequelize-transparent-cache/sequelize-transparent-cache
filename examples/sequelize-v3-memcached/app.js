@@ -33,7 +33,7 @@ sequelize.sync()
     })
   })
   .then(() => {
-    return User.cache().findById(1) // Load user from cache
+    return User.cache().findByPk(1) // Load user from cache
   })
   .then(user => {
     return user.cache().update({ // Update in db and cache

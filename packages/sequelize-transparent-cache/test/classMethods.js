@@ -45,13 +45,13 @@ t.test('Class methods', async t => {
       'Entity with composite primary keys cached after create'
     )
     t.deepEqual(
-      (await User.cache().findById(1)).get(),
+      (await User.cache().findByPk(1)).get(),
       user.get(),
       'Cached user with primary key correctly loaded'
     )
 
     t.deepEqual(
-      (await Article.cache().findById(article.uuid)).get(),
+      (await Article.cache().findByPk(article.uuid)).get(),
       article.get(),
       'Cached entity correctly loaded using custom primary key'
     )
@@ -65,8 +65,8 @@ t.test('Class methods', async t => {
 
     // TODO: Fix this issue
     t.deepEqual(
-      (await User.cache().findById(1)).get(),
-      (await User.findById(1)).get(),
+      (await User.cache().findByPk(1)).get(),
+      (await User.findByPk(1)).get(),
       'Timestamps synced after upsert',
       { skip: true }
     )
@@ -78,61 +78,84 @@ t.test('Class methods', async t => {
     t.deepEqual(
       cacheStore.User[1],
       user.get(),
-      'User cached afrer upsert'
+      'User cached after upsert'
     )
   })
 
-  t.test('FindById', async t => {
-    t.is(await User.cache().findById(2), null, 'Cache miss not causing any problem')
+  t.test('findByPk', async t => {
+    t.is(await User.cache().findByPk(2), null, 'Cache miss not causing any problem')
 
     delete cacheStore.User[1]
     // Deleted so first find goes directly to DB & and second one retrieves from cache with association
     t.is(
-      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
-      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
+      (await User.cache().findByPk(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
+      (await User.cache().findByPk(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
       'Retrieved user with Article association'
     )
   })
 
-  t.test('manualCache -> find', async t => {
-    t.is(await User.manualCache('sasas').find({ where: { name: 'Not existent' } }), null, 'Cache miss not causing any problem')
-
-    const key = 'IvanUserCacheKey'
-    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
-    t.is(
-      manualTest.get().Articles[0].get().uuid,
-      (await User.cache().findById(1, { include: [{ model: Article, as: 'Articles' }] })).get().Articles[0].get().uuid,
-      'Retrieved User with Article association using find method'
+  t.test('manualCache -> findAll', async t => {
+    t.same(
+      await User.manualCache('missing-key-1').findAll({ where: { name: 'Not existent' } }),
+      [],
+      'Cache miss not causing any problem'
     )
 
-    delete cacheStore.User[key]
-    const secondManualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
-    const thirdManualTest = await User.manualCache(key).find({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    const key = 'IvanUserCacheKey1'
+    const [ivanUserFromCache] = await User.manualCache(key).findAll({
+      where: { name: 'Ivan' },
+      include: [{ model: Article, as: 'Articles' }]
+    })
+
+    const ivanUserFromDB = await User.findByPk(1, {
+      include: [{ model: Article, as: 'Articles' }]
+    })
+
     t.is(
-      secondManualTest.get().Articles[0].get().uuid,
-      thirdManualTest.get().Articles[0].get().uuid,
-      'Retrieved User with Article association from DB and cache'
+      ivanUserFromCache.get().Articles[0].get().uuid,
+      ivanUserFromDB.get().Articles[0].get().uuid,
+      'Retrieved User with Article association using findAll method'
+    )
+  })
+
+  t.test('manualCache -> findOne', async t => {
+    const user = await User.manualCache('missing-key-2').findOne({ where: { name: 'Not existent' } })
+
+    t.same(
+      user,
+      null,
+      'Cache miss not causing any problem'
+    )
+
+    const key = 'IvanUserCacheKey2'
+    const ivanUserFromCache = await User.manualCache(key).findOne({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+    const ivanUserFromDB = await User.findOne({ where: { name: 'Ivan' }, include: [{ model: Article, as: 'Articles' }] })
+
+    t.is(
+      ivanUserFromCache.get().Articles[0].get().uuid,
+      ivanUserFromDB.get().Articles[0].get().uuid,
+      'Retrieved User with Article association using findOne method'
     )
   })
 
   t.test('manualCache -> cache store', async t => {
     const key = 'ClearStoreUserCacheKey'
     const manualCacheStore = User.manualCache().client().store
-    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' } })
+    const manualTest = await User.manualCache(key).findOne({ where: { name: 'Ivan' } })
     t.deepEqual(
       manualCacheStore.User[key],
       manualTest.get(),
-      'User cached afrer find and present in key using manualCache store'
+      'User cached after find and present in key using manualCache store'
     )
   })
 
   t.test('manualCache -> clear', async t => {
     const key = 'ClearUserCacheKey'
-    const manualTest = await User.manualCache(key).find({ where: { name: 'Ivan' } })
+    const manualTest = await User.manualCache(key).findOne({ where: { name: 'Ivan' } })
     t.deepEqual(
       cacheStore.User[key],
       manualTest.get(),
-      'User cached afrer find and present in key'
+      'User cached after find and present in key'
     )
 
     await User.manualCache(key).clear()

@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "memcache-plus": "^0.2.19",
-    "tap": "^12.0.1"
+    "tap": "^12.6.0"
   }
 }

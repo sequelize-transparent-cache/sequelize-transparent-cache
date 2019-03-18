@@ -20,11 +20,11 @@ t.test('Instance methods', async t => {
     t.deepEqual(
       cacheStore.User[1],
       user.get(),
-      'User cached afrer create'
+      'User cached after create'
     )
 
     t.deepEqual(
-      (await User.cache().findById(1)).get(),
+      (await User.cache().findByPk(1)).get(),
       user.get(),
       'Cached user correctly loaded'
     )
@@ -40,12 +40,12 @@ t.test('Instance methods', async t => {
     t.deepEqual(
       cacheStore.User[1],
       user.get(),
-      'User cached afrer upsert'
+      'User cached after upsert'
     )
   })
   t.test('Clear', async t => {
     t.deepEqual(
-      (await User.cache().findById(1)).get(),
+      (await User.cache().findByPk(1)).get(),
       user.get(),
       'Cached user correctly loaded'
     )
@@ -66,7 +66,7 @@ t.test('Instance methods', async t => {
     )
 
     t.notOk(
-      await User.findById(1),
+      await User.findByPk(1),
       'User was deleted from db'
     )
   })

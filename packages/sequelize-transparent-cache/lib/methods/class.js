@@ -1,64 +1,73 @@
 const cache = require('../cache')
 
-function classMethods (client, model) {
+function buildAutoMethods(client, model) {
   return {
-    client () {
+    client() {
       return client
     },
-    create () {
+    create() {
       return model.create.apply(model, arguments)
-      .then(instance => {
-        return cache.save(client, instance)
-      })
+        .then(instance => {
+          return cache.save(client, instance)
+        })
     },
-    findByPk (id) {
+    findByPk(id) {
       return cache.get(client, model, id)
-      .then(instance => {
-        if (instance) {
-          return instance
-        }
+        .then(instance => {
+          if (instance) {
+            return instance
+          }
 
-        return (model.findByPk || model.findById).apply(model, arguments)
-        .then(instance => cache.save(client, instance))
-      })
+          return (model.findByPk || model.findById).apply(model, arguments)
+            .then(instance => cache.save(client, instance))
+        })
     },
-    findById () {
+    findById() {
       return this.findByPk.apply(this, arguments)
     },
-    upsert (data) {
+    upsert(data) {
       return model.upsert.apply(model, arguments).then(created => {
         return cache.save(client, model.build(data))
-        .then(() => created)
+          .then(() => created)
       })
     },
-    insertOrUpdate () {
+    insertOrUpdate() {
       return this.upsert.apply(this, arguments)
     }
   }
 }
 
-function manualCacheMethods (client, model, customKey) {
+function buildManualMethods(client, model, customKey) {
   return {
-    client () {
+    client() {
       return client
     },
-    findAll () {
+    findAll() {
+      return cache.getAll(client, model, customKey)
+        .then(instances => {
+          if (instances) { // any array - cache hit
+            return instances
+          }
+
+          return model.findAll.apply(model, arguments)
+            .then(instances => cache.saveAll(client, model, instances, customKey))
+        })
+    },
+    findOne() {
       return cache.get(client, model, customKey)
         .then(instance => {
           if (instance) {
             return instance
           }
-          return model.find.apply(model, arguments)
+
+          return model.findOne.apply(model, arguments)
             .then(instance => cache.save(client, instance, customKey))
         })
     },
-    find () {
-      return this.findAll.apply(this, arguments)
-    },
-    clear () {
+    clear() {
       return cache.clearKey(client, model, customKey)
     }
   }
 }
 
-module.exports = { classMethods, manualCacheMethods }
+module.exports = { auto: buildAutoMethods, manual: buildManualMethods }
