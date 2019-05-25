@@ -28,17 +28,17 @@ class IORedisAdaptor {
 
   get (key) {
     return this.client.get(this._withNamespace(key))
-    .then(data => {
-      if (!data) {
-        return data
-      }
+      .then(data => {
+        if (!data) {
+          return data
+        }
 
-      return JSON.parse(data, (key, value) => {
-        return value && value.type === 'Buffer'
-          ? Buffer.from(value.data)
-          : value
+        return JSON.parse(data, (key, value) => {
+          return value && value.type === 'Buffer'
+            ? Buffer.from(value.data)
+            : value
+        })
       })
-    })
   }
 
   del (key) {

@@ -2,7 +2,7 @@
   "name": "sequelize-transparent-cache-memcached",
   "version": "2.0.1",
   "description": "Memcached adaptor for sequelize-transparent-cache",
-  "main": "MemcachedAdaptor.js",
+  "main": "src/index.js",
   "keywords": [
     "sequelize",
     "cache",

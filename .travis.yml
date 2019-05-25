@@ -3,7 +3,7 @@ node_js:
   - 10
 
 script:
-  - npm test
+  - yarn test
 
 services:
   - redis-server

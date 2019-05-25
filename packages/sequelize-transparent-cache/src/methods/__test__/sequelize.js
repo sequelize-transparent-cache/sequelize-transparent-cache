@@ -1,7 +1,7 @@
-const VariableAdaptor = require('sequelize-transparent-cache-variable')
+const VariableAdaptor = require('../../../../sequelize-transparent-cache-variable')
 const variableAdaptor = new VariableAdaptor()
 
-const sequelizeCache = require('../../lib')
+const sequelizeCache = require('../..')
 
 const Sequelize = require('sequelize')
 

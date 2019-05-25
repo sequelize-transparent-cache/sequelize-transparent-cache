@@ -13,4 +13,4 @@ ratings:
 
 exclude_paths:
 - examples/
-- test/
+- __test__/

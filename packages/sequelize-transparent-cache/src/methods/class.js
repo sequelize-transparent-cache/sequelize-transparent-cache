@@ -1,17 +1,17 @@
 const cache = require('../cache')
 
-function buildAutoMethods(client, model) {
+function buildAutoMethods (client, model) {
   return {
-    client() {
+    client () {
       return client
     },
-    create() {
+    create () {
       return model.create.apply(model, arguments)
         .then(instance => {
           return cache.save(client, instance)
         })
     },
-    findByPk(id) {
+    findByPk (id) {
       return cache.get(client, model, id)
         .then(instance => {
           if (instance) {
@@ -22,27 +22,27 @@ function buildAutoMethods(client, model) {
             .then(instance => cache.save(client, instance))
         })
     },
-    findById() {
+    findById () {
       return this.findByPk.apply(this, arguments)
     },
-    upsert(data) {
+    upsert (data) {
       return model.upsert.apply(model, arguments).then(created => {
-        return cache.save(client, model.build(data))
+        return cache.destroy(client, model.build(data))
           .then(() => created)
       })
     },
-    insertOrUpdate() {
+    insertOrUpdate () {
       return this.upsert.apply(this, arguments)
     }
   }
 }
 
-function buildManualMethods(client, model, customKey) {
+function buildManualMethods (client, model, customKey) {
   return {
-    client() {
+    client () {
       return client
     },
-    findAll() {
+    findAll () {
       return cache.getAll(client, model, customKey)
         .then(instances => {
           if (instances) { // any array - cache hit
@@ -53,7 +53,7 @@ function buildManualMethods(client, model, customKey) {
             .then(instances => cache.saveAll(client, model, instances, customKey))
         })
     },
-    findOne() {
+    findOne () {
       return cache.get(client, model, customKey)
         .then(instance => {
           if (instance) {
@@ -64,7 +64,7 @@ function buildManualMethods(client, model, customKey) {
             .then(instance => cache.save(client, instance, customKey))
         })
     },
-    clear() {
+    clear () {
       return cache.clearKey(client, model, customKey)
     }
   }

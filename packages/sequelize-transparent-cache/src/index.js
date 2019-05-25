@@ -3,12 +3,10 @@ const buildInstanceMethods = require('./methods/instance')
 
 module.exports = client => ({
   withCache (modelClass) {
-    modelClass.cache = function () {
-      return buildClassMethods.auto(client, this)
-    }
-
-    modelClass.manualCache = function (customId) {
-      return buildClassMethods.manual(client, this, customId)
+    modelClass.cache = function (customId) {
+      return customId
+        ? buildClassMethods.manual(client, this, customId)
+        : buildClassMethods.auto(client, this)
     }
 
     modelClass.prototype.cache = function () {
