@@ -34,7 +34,7 @@ function loadAssociations (model, depth = 1) {
   if (Object.keys(model.associations).length > 0 && depth <= 5) {
     Object.keys(model.associations).forEach((key) => {
       const value = model.associations[key]
-      let modelName;
+      let modelName
       if (model.sequelize.isDefined(value.target.name)) {
         modelName = value.target.name
       } else if (value.hasOwnProperty('options') && model.sequelize.isDefined(value.options.name.singular)) {
