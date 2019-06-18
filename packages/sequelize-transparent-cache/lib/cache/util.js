@@ -29,20 +29,31 @@ function dataToInstance (model, data) {
   return instance
 }
 
-function loadAssociations (model) {
+function loadAssociations (model, depth = 1) {
   const associations = []
-
-  Object.keys(model.associations).forEach((key) => {
-    //  model.associations[key] does not work on include, we grab it from sequelize.model()
-    if (model.associations[key].hasOwnProperty('options')) {
-      const modelName = model.associations[key].options.name.singular
+  if (Object.keys(model.associations).length > 0 && depth <= 5) {
+    Object.keys(model.associations).forEach((key) => {
+      const value = model.associations[key]
+      let modelName;
+      if (model.sequelize.isDefined(value.target.name)) {
+        modelName = value.target.name
+      } else if (value.hasOwnProperty('options') && model.sequelize.isDefined(value.options.name.singular)) {
+        modelName = value.options.name.singular
+      } else if (value.hasOwnProperty('options') && model.sequelize.isDefined(value.options.as)) {
+        modelName = value.options.as
+      } else {
+        return
+      }
+      const target = model.sequelize.model(modelName)
+      // we have to do this to get scopes to work
+      target._injectScope({})
       associations.push({
-        model: model.sequelize.model(modelName),
-        as: key
+        model: target,
+        as: value.associationAccessor,
+        include: loadAssociations(target, depth + 1)
       })
-    }
-  })
-
+    })
+  }
   return associations
 }
 
