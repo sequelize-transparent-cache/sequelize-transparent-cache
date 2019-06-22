@@ -53,20 +53,27 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 // withCache() will add cache() methods to all models and instances in sequelize v4
 const User = withCache(sequelize.import('./models/user'))
 
-sequelize.sync()
-.then(() => {
-  return User.cache().create({ // Create user in db and in cache
-    id: 1,
-    name: 'Daniel'
-  })
+await sequelize.sync()
+
+// Cache result of arbitrary query - requires cache key
+await User.cache('active-users').findAll({
+  where: {
+    status: 'ACTIVE'
+  }
 })
-.then(() => {
-  return User.cache().findByPk(1) // Load user from cache
+
+// Create user in db and in cache
+await User.cache().create({
+  id: 1,
+  name: 'Daniel'
 })
-.then(user => {
-  return user.cache().update({ // Update in db and cache
-    name: 'Vikki'
-  })
+
+// Load user from cache
+const user = await User.cache().findByPk(1);
+
+// Update in db and cache
+await user.cache().update({
+  name: 'Vikki'
 })
 
 ```
@@ -88,11 +95,14 @@ Instance:
 * [`reload()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#instance-method-reload)
 
 Model:
-
-* [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
-* [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
-* [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
-* [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
+* Automatic cache methods - does not require cache key: `cache()`
+  * [`create()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-create)
+  * [`findByPk()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findByPk)
+  * [`upsert()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
+  * [`insertOrUpdate()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-upsert) - **EXPERIMENTAL**
+* Manual cache methods - require cache key: `cache(key)`
+  * [`findAll()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findAll)
+  * [`findOne()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findOne)
 
 In addition, both objects will contain `client()` method to get cache adaptor.
 
