@@ -56,7 +56,7 @@ withCache(sequelize.models.User)
 withCache(sequelize.models.Article)
 withCache(sequelize.models.Comment)
 
-sequelize.model('User').hasMany(sequelize.model('Article'), { as: 'Articles' })
-sequelize.model('Article').belongsTo(sequelize.model('User'), { as: 'User' })
+sequelize.model('User').hasMany(sequelize.model('Article'))
+sequelize.model('Article').belongsTo(sequelize.model('User'))
 
 module.exports = sequelize

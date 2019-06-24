@@ -37,10 +37,6 @@ function loadAssociations (model, depth = 1) {
       let modelName
       if (model.sequelize.isDefined(value.target.name)) {
         modelName = value.target.name
-      } else if (value.hasOwnProperty('options') && model.sequelize.isDefined(value.options.name.singular)) {
-        modelName = value.options.name.singular
-      } else if (value.hasOwnProperty('options') && model.sequelize.isDefined(value.options.as)) {
-        modelName = value.options.as
       } else {
         return
       }
