@@ -1,6 +1,6 @@
 const sequelize = require('./sequelize')
 
-const { User, Article, Comment } = sequelize.models
+const { User, Article, Comment, Group } = sequelize.models
 const cacheStore = User.cache().client().store
 
 beforeAll(() => sequelize.sync())
@@ -27,6 +27,14 @@ describe('Class methods', () => {
       body: 'New comment'
     })
 
+    const group = await Group.cache().create({
+      id: 1,
+      name: 'Group of wonderful people'
+    })
+
+    await group.setGroupUsers([user])
+    await group.cache().save()
+
     // User with default primary key cached after create
     expect(cacheStore.User[1]).toEqual(
       user.get()
@@ -50,6 +58,10 @@ describe('Class methods', () => {
     // Cached entity correctly loaded using custom primary key
     expect((await Article.cache().findByPk(article.uuid)).get()).toEqual(
       article.get()
+    )
+
+    expect((await Group.cache().findByPk(1)).get()).toEqual(
+      group.get()
     )
   })
 
@@ -75,6 +87,20 @@ describe('Class methods', () => {
     expect(cacheStore.User[1]).toEqual(
       user.get({ plain: true }) // TODO fix loading superfluous data
     )
+
+    const group = await Group.cache().findByPk(1)
+
+    await Group.cache().upsert({
+      id: 1,
+      name: 'Group of best people'
+    })
+
+    expect((await Group.cache().findByPk(1)).get()).toEqual(
+      (await Group.findByPk(1)).get()
+    )
+
+    await group.cache().reload()
+    expect(group.name).toBe('Group of best people')
   })
 
   test('findByPk', async () => {
@@ -91,6 +117,14 @@ describe('Class methods', () => {
     // Retrieved user with Article association
     expect(await getQuery()).toBe(
       await getQuery()
+    )
+
+    const getGroupQuery = async () => {
+      const group = await Group.cache().findByPk(1, { include: [{ model: User, as: 'groupUsers' }] })
+      return group.get().groupUsers[0].get().name
+    }
+    expect(await getGroupQuery()).toBe(
+      await getGroupQuery()
     )
   })
 
