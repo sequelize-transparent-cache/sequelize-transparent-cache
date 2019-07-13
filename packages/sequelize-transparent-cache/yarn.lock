@@ -345,8 +345,8 @@ jsprim@^1.2.2:
     verror "1.10.0"
 
 lodash@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
 
 mime-db@1.40.0:
   version "1.40.0"
@@ -599,10 +599,6 @@ sequelize-pool@^1.0.2:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-1.0.2.tgz#89c767882bbdb8a41dac66922ed9820939a5401e"
   dependencies:
     bluebird "^3.5.3"
-
-sequelize-transparent-cache-variable@latest:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/sequelize-transparent-cache-variable/-/sequelize-transparent-cache-variable-2.0.1.tgz#70e4d6097184ea5ded2b9c4db5fa0b017af4acee"
 
 sequelize@>=4.0.0:
   version "5.8.6"
