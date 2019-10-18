@@ -111,11 +111,11 @@ describe('Class methods', () => {
 
     const getQuery = async () => {
       const user = await User.cache().findByPk(1, { include: [{ model: Article, as: 'Articles' }] })
-      return user.get().Articles[0].get().uuid
+      return user.get().Articles[0].get()
     }
 
     // Retrieved user with Article association
-    expect(await getQuery()).toBe(
+    expect(await getQuery()).toEqual(
       await getQuery()
     )
 
@@ -147,13 +147,13 @@ describe('Class methods', () => {
     const [dbValue] = await User.findAll(getQuery())
 
     // Returned value is the same, not matter if cache hit or miss
-    expect(cacheMiss.get().Articles[0].get().uuid).toBe(
-      cacheHit.get().Articles[0].get().uuid
+    expect(cacheMiss.get().Articles[0].get()).toEqual(
+      cacheHit.get().Articles[0].get()
     )
 
     // 'Returned value is the same, as in db'
-    expect(cacheHit.get().Articles[0].get().uuid).toBe(
-      dbValue.get().Articles[0].get().uuid
+    expect(cacheHit.get().Articles[0].get()).toEqual(
+      dbValue.get().Articles[0].get()
     )
   })
 

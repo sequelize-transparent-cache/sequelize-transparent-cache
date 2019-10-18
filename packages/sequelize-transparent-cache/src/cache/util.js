@@ -12,20 +12,7 @@ function dataToInstance (model, data) {
     include = loadAssociations(model)
   }
 
-  const instance = model.build(data, { isNewRecord: false, include })
-
-  if (data.updatedAt) {
-    instance.setDataValue('updatedAt', data.updatedAt)
-  }
-
-  if (data.createdAt) {
-    instance.setDataValue('createdAt', data.createdAt)
-  }
-
-  if (data.deletedAt) {
-    instance.setDataValue('deletedAt', data.deletedAt)
-  }
-
+  const instance = model.build(data, { isNewRecord: false, raw: true, include })
   return instance
 }
 
