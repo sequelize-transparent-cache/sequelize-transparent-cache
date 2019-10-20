@@ -37,17 +37,17 @@ describe('Class methods', () => {
 
     // User with default primary key cached after create
     expect(cacheStore.User[1]).toEqual(
-      user.get()
+      JSON.stringify(user)
     )
 
     // Entity with custom primary key cached after create
     expect(cacheStore.Article[article.uuid]).toEqual(
-      article.get()
+      JSON.stringify(article)
     )
 
     // Entity with composite primary keys cached after create
     expect(cacheStore.Comment[`${comment.userId},${comment.articleUuid}`]).toEqual(
-      comment.get()
+      JSON.stringify(comment)
     )
 
     // Cached user with primary key correctly loaded
@@ -85,7 +85,7 @@ describe('Class methods', () => {
 
     // User cached after upsert
     expect(cacheStore.User[1]).toEqual(
-      user.get({ plain: true }) // TODO fix loading superfluous data
+      JSON.stringify(user) // TODO fix loading superfluous data
     )
 
     const group = await Group.cache().findByPk(1)
@@ -111,7 +111,8 @@ describe('Class methods', () => {
 
     const getQuery = async () => {
       const user = await User.cache().findByPk(1, { include: [{ model: Article, as: 'Articles' }] })
-      return user.get().Articles[0].get()
+      const articles = user.Articles[0].get()
+      return articles
     }
 
     // Retrieved user with Article association
@@ -185,22 +186,25 @@ describe('Class methods', () => {
 
   test('cache -> cache store', async () => {
     const key = 'ClearStoreUserCacheKey'
-    const cacheStore = User.cache().client().store
-    const manualTest = await User.cache(key).findOne({ where: { name: 'Ivan' } })
+
+    const cachedUser = await User.cache(key).findOne({ where: { name: 'Ivan' } })
+    const userFromDb = await User.findOne({ where: { name: 'Ivan' } })
 
     // User cached after find and present in key using cache store
-    expect(cacheStore.User[key]).toEqual(
-      manualTest.get()
+    expect(userFromDb.get()).toEqual(
+      cachedUser.get()
     )
   })
 
   test('cache -> clear', async () => {
     const key = 'ClearUserCacheKey'
-    const manualTest = await User.cache(key).findOne({ where: { name: 'Ivan' } })
+
+    const cachedUser = await User.cache(key).findOne({ where: { name: 'Ivan' } })
+    const userFromDb = await User.findOne({ where: { name: 'Ivan' } })
 
     // User cached after find and present in key
-    expect(cacheStore.User[key]).toEqual(
-      manualTest.get()
+    expect(userFromDb.get()).toEqual(
+      cachedUser.get()
     )
 
     await User.cache(key).clear()

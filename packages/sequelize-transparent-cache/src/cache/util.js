@@ -6,31 +6,55 @@ function dataToInstance (model, data) {
   if (!data) {
     return data
   }
-  let include = []
 
-  if (model.associations) {
-    include = loadAssociations(model)
-  }
+  const include = generateInclude(model)
+  const instance = model.build(data, { isNewRecord: false, raw: false, include })
 
-  const instance = model.build(data, { isNewRecord: false, raw: true, include })
+  restoreTimestamps(data, instance)
+
   return instance
 }
 
-function loadAssociations (model) {
-  const associations = []
+function restoreTimestamps (data, instance) {
+  const timestampFields = ['createdAt', 'updatedAt', 'deletedAt']
 
-  Object.keys(model.associations).forEach((key) => {
-    //  model.associations[key] does not work on include, we grab it from sequelize.model()
-    if (model.associations[key].hasOwnProperty('options')) {
-      const modelName = model.associations[key].target.name
-      associations.push({
-        model: model.sequelize.model(modelName),
-        as: key
-      })
+  for (const field of timestampFields) {
+    const value = data[field]
+    if (value) {
+      instance.setDataValue(field, new Date(value))
+    }
+  }
+
+  Object.keys(data).forEach(key => {
+    const value = data[key]
+
+    if (!value) {
+      return
+    }
+
+    if (Array.isArray(value)) {
+      const nestedInstances = instance.get(key)
+      value.forEach((nestedValue, i) => restoreTimestamps(nestedValue, nestedInstances[i]))
+      return
+    }
+
+    if (typeof value === 'object') {
+      const nestedInstance = instance.get(key)
+      Object.values(value).forEach(nestedValue => restoreTimestamps(nestedValue, nestedInstance))
     }
   })
+}
 
-  return associations
+function generateInclude (model) {
+  return Object.entries(model.associations || [])
+    .filter(([as, association]) => {
+      const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
+      return hasOptions
+    })
+    .map(([as, association]) => ({
+      model: model.sequelize.model(association.target.name),
+      as
+    }))
 }
 
 module.exports = {

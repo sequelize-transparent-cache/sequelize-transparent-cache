@@ -16,7 +16,7 @@ class IORedisAdaptor {
 
   set (key, value) {
     const options = this.lifetime
-      ? [ 'EX', this.lifetime ]
+      ? ['EX', this.lifetime]
       : []
 
     return this.client.set(

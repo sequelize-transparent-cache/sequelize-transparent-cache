@@ -19,7 +19,7 @@ describe('Instance methods', () => {
 
     // User cached after create
     expect(cacheStore.User[1]).toEqual(
-      user.get()
+      JSON.stringify(user.get())
     )
 
     // Cached user correctly loaded
@@ -38,7 +38,7 @@ describe('Instance methods', () => {
 
     // User cached after upsert
     expect(cacheStore.User[1]).toEqual(
-      user.get()
+      JSON.stringify(user.get())
     )
   })
 
