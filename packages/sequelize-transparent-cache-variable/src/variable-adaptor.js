@@ -12,14 +12,15 @@ class VariableAdaptor {
   set ([model, ...ids], value) {
     this._ensureModel(model)
 
-    this.store[model][ids.join()] = value
+    this.store[model][ids.join()] = JSON.stringify(value)
     return Promise.resolve()
   }
 
   get ([model, ...ids]) {
     this._ensureModel(model)
+    const data = this.store[model][ids.join()]
 
-    return Promise.resolve(this.store[model][ids.join()])
+    return Promise.resolve(data ? JSON.parse(data) : data)
   }
 
   del ([model, ...ids]) {
