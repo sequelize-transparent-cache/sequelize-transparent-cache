@@ -33,14 +33,23 @@ function restoreTimestamps (data, instance) {
     }
 
     if (Array.isArray(value)) {
-      const nestedInstances = instance.get(key)
-      value.forEach((nestedValue, i) => restoreTimestamps(nestedValue, nestedInstances[i]))
+      try {
+        const nestedInstances = instance.get(key)
+        value.forEach((nestedValue, i) => restoreTimestamps(nestedValue, nestedInstances[i]))
+      } catch { // TODO: Fix issue with JSON and BLOB columns
+
+      }
+
       return
     }
 
     if (typeof value === 'object') {
-      const nestedInstance = instance.get(key)
-      Object.values(value).forEach(nestedValue => restoreTimestamps(nestedValue, nestedInstance))
+      try {
+        const nestedInstance = instance.get(key)
+        Object.values(value).forEach(nestedValue => restoreTimestamps(nestedValue, nestedInstance))
+      } catch { // TODO: Fix issue with JSON and BLOB columns
+
+      }
     }
   })
 }
