@@ -1,0 +1,16 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "examples/memcached-mysql/package.json",
+        "examples/redis-mysql/package.json",
+        "package.json",
+        "packages/sequelize-transparent-cache-ioredis/package.json",
+        "packages/sequelize-transparent-cache-memcache-plus/package.json",
+        "packages/sequelize-transparent-cache-memcached/package.json",
+        "packages/sequelize-transparent-cache-variable/package.json",
+        "packages/sequelize-transparent-cache/package.json"
+      ]
+    }
+  }
+}
