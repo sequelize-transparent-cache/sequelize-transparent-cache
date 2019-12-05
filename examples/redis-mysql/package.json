@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "ioredis": "^4.6.2",
-    "mysql2": "^1.6.5",
+    "mysql2": "^2.0.2",
     "sequelize": "^5.1.0"
   }
 }
