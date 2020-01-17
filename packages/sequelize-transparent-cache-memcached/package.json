@@ -20,7 +20,7 @@
     "email": "daniel.hreben@gmail.com"
   },
   "license": "CC-BY-4.0",
-  "peerDependencies": {
+  "devDependencies": {
     "memcached": "^2.2.2"
   }
 }

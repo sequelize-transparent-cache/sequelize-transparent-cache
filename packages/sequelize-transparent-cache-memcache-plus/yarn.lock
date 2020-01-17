@@ -35,9 +35,10 @@ lodash@^4.14.0:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
-memcache-plus@^0.2.19:
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/memcache-plus/-/memcache-plus-0.2.19.tgz#c19bf9d98cb1d5dd63e0483af1f0d8e26385b236"
+memcache-plus@^0.2.20:
+  version "0.2.20"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/memcache-plus/-/memcache-plus-0.2.20.tgz#9a89a93fb86671443f37d0a751b2e27b36d2a7b8"
+  integrity sha1-mompP7hmcUQ/N9CnUbLiezbSp7g=
   dependencies:
     bluebird "^3.4.1"
     carrier "^0.3.0"

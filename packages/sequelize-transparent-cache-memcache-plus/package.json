@@ -22,6 +22,6 @@
   },
   "license": "CC-BY-4.0",
   "devDependencies": {
-    "memcache-plus": "^0.2.19"
+    "memcache-plus": "^0.2.20"
   }
 }
