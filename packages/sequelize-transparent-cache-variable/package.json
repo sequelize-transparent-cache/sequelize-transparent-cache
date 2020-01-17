@@ -18,8 +18,5 @@
     "name": "Daniel Hreben",
     "email": "daniel.hreben@gmail.com"
   },
-  "license": "CC-BY-4.0",
-  "peerDependencies": {
-    "sequelize-transparent-cache": "^2.0.0"
-  }
+  "license": "CC-BY-4.0"
 }

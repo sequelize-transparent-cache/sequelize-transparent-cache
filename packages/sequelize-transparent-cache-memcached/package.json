@@ -21,7 +21,6 @@
   },
   "license": "CC-BY-4.0",
   "peerDependencies": {
-    "memcached": "^2.2.2",
-    "sequelize-transparent-cache": "^2.0.0"
+    "memcached": "^2.2.2"
   }
 }
