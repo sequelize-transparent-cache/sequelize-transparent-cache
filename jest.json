@@ -3,5 +3,6 @@
   "collectCoverage": true,
   "coveragePathIgnorePatterns": [
     "__test__"
-  ]
+  ],
+  "preset": "ts-jest"
 }
