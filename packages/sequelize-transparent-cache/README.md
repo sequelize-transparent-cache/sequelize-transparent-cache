@@ -6,7 +6,6 @@
 [![Code Climate](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache)
 [![npm version](https://badge.fury.io/js/sequelize-transparent-cache.svg)](https://badge.fury.io/js/sequelize-transparent-cache)
 [![Dependency Status](https://david-dm.org/DanielHreben/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
-[![Greenkeeper badge](https://badges.greenkeeper.io/DanielHreben/sequelize-transparent-cache.svg)](https://greenkeeper.io/)
 
 Simple to use and universal cache layer for Sequelize.
 
@@ -103,6 +102,7 @@ Model:
 * Manual cache methods - require cache key: `cache(key)`
   * [`findAll()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findAll)
   * [`findOne()`](http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-findOne)
+  * `clear()` - remove data associated with key from cache
 
 In addition, both objects will contain `client()` method to get cache adaptor.
 
@@ -115,8 +115,8 @@ In addition, both objects will contain `client()` method to get cache adaptor.
 
 You can easy write your own adaptor. Each adaptor must implement 3 methods:
 
-* `get(path: Array): Promise<value>`
-* `set(path: Array, value: Object): Promise`
-* `del(path: Array): Promise`
+* `get(path: Array<string>): Promise<object>`
+* `set(path: Array<string>, value: object): Promise<void>`
+* `del(path: Array<string>): Promise<void>`
 
 Checkout existed adaptors for reference implementation.
