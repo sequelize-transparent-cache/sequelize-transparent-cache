@@ -18,10 +18,10 @@
   },
   "license": "CC-BY-4.0",
   "peerDependencies": {
-    "sequelize": ">=4"
+    "sequelize": ">=5"
   },
   "devDependencies": {
-    "sequelize": ">=4.0.0",
-    "sqlite3": "^4.0.6"
+    "sequelize": ">=5.21.3",
+    "sqlite3": "^4.1.1"
   }
 }

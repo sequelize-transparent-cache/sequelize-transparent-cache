@@ -74,7 +74,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bluebird@^3.5.0, bluebird@^3.5.3:
+bluebird@^3.5.0:
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
 
@@ -344,9 +344,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-lodash@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+lodash@^4.17.15:
+  version "4.17.15"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
 
 mime-db@1.40.0:
   version "1.40.0"
@@ -566,9 +567,10 @@ request@^2.87.0:
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
 
-retry-as-promised@^3.1.0:
+retry-as-promised@^3.2.0:
   version "3.2.0"
-  resolved "https://registry.yarnpkg.com/retry-as-promised/-/retry-as-promised-3.2.0.tgz#769f63d536bec4783549db0777cb56dadd9d8543"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/retry-as-promised/-/retry-as-promised-3.2.0.tgz#769f63d536bec4783549db0777cb56dadd9d8543"
+  integrity sha1-dp9j1Ta+xHg1SdsHd8tW2t2dhUM=
   dependencies:
     any-promise "^1.3.0"
 
@@ -590,39 +592,40 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-semver@^5.3.0, semver@^5.6.0:
+semver@^5.3.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
 
-sequelize-pool@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-1.0.2.tgz#89c767882bbdb8a41dac66922ed9820939a5401e"
-  dependencies:
-    bluebird "^3.5.3"
+semver@^6.3.0:
+  version "6.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
+  integrity sha1-7gpkyK9ejO6mdoexM3YeG+y9HT0=
 
-sequelize-transparent-cache-variable@latest:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/sequelize-transparent-cache-variable/-/sequelize-transparent-cache-variable-2.0.1.tgz#70e4d6097184ea5ded2b9c4db5fa0b017af4acee"
+sequelize-pool@^2.3.0:
+  version "2.3.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/sequelize-pool/-/sequelize-pool-2.3.0.tgz#64f1fe8744228172c474f530604b6133be64993d"
+  integrity sha1-ZPH+h0QigXLEdPUwYEthM75kmT0=
 
-sequelize@>=4.0.0:
-  version "5.8.6"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-5.8.6.tgz#22cd5b9443fa303552f925f99a08c9a5236f86cb"
+sequelize@>=5.21.3:
+  version "5.21.3"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/sequelize/-/sequelize-5.21.3.tgz#f8a6fa0245f8995d70849e4da00c2c7c9aa9f569"
+  integrity sha1-+Kb6AkX4mV1whJ5NoAwsfJqp9Wk=
   dependencies:
     bluebird "^3.5.0"
     cls-bluebird "^2.1.0"
     debug "^4.1.1"
     dottie "^2.0.0"
     inflection "1.12.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     moment "^2.24.0"
     moment-timezone "^0.5.21"
-    retry-as-promised "^3.1.0"
-    semver "^5.6.0"
-    sequelize-pool "^1.0.2"
+    retry-as-promised "^3.2.0"
+    semver "^6.3.0"
+    sequelize-pool "^2.3.0"
     toposort-class "^1.0.1"
-    uuid "^3.2.1"
+    uuid "^3.3.3"
     validator "^10.11.0"
-    wkx "^0.4.6"
+    wkx "^0.4.8"
 
 set-blocking@~2.0.0:
   version "2.0.0"
@@ -636,9 +639,10 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-sqlite3@^4.0.6:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/sqlite3/-/sqlite3-4.0.8.tgz#81ee60d54befaa52f5421fe6337050bd43d4bb95"
+sqlite3@^4.1.1:
+  version "4.1.1"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/sqlite3/-/sqlite3-4.1.1.tgz#539a42e476640796578e22d589b3283c28055242"
+  integrity sha1-U5pC5HZkB5ZXjiLVibMoPCgFUkI=
   dependencies:
     nan "^2.12.1"
     node-pre-gyp "^0.11.0"
@@ -738,9 +742,14 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
-uuid@^3.2.1, uuid@^3.3.2:
+uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
+
+uuid@^3.3.3:
+  version "3.4.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
+  integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
 
 validator@^10.11.0:
   version "10.11.0"
@@ -760,9 +769,10 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-wkx@^0.4.6:
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/wkx/-/wkx-0.4.6.tgz#228ab592e6457382ea6fb79fc825058d07fce523"
+wkx@^0.4.8:
+  version "0.4.8"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/wkx/-/wkx-0.4.8.tgz#a092cf088d112683fdc7182fd31493b2c5820003"
+  integrity sha1-oJLPCI0RJoP9xxgv0xSTssWCAAM=
   dependencies:
     "@types/node" "*"
 
