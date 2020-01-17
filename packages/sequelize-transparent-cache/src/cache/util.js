@@ -36,7 +36,7 @@ function restoreTimestamps (data, instance) {
       try {
         const nestedInstances = instance.get(key)
         value.forEach((nestedValue, i) => restoreTimestamps(nestedValue, nestedInstances[i]))
-      } catch { // TODO: Fix issue with JSON and BLOB columns
+      } catch (error) { // TODO: Fix issue with JSON and BLOB columns
 
       }
 
@@ -47,7 +47,7 @@ function restoreTimestamps (data, instance) {
       try {
         const nestedInstance = instance.get(key)
         Object.values(value).forEach(nestedValue => restoreTimestamps(nestedValue, nestedInstance))
-      } catch { // TODO: Fix issue with JSON and BLOB columns
+      } catch (error) { // TODO: Fix issue with JSON and BLOB columns
 
       }
     }
