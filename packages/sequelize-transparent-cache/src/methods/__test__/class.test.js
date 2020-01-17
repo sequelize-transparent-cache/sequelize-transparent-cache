@@ -6,8 +6,9 @@ const cacheStore = User.cache().client().store
 beforeAll(() => sequelize.sync())
 
 describe('Class methods', () => {
-  expect(cacheStore).toEqual({}) // Cache is empty on start
-
+  test('Cache is empty on start', () => {
+    expect(cacheStore).toEqual({})
+  })
   test('Create', async () => {
     const user = await User.cache().create({
       id: 1,

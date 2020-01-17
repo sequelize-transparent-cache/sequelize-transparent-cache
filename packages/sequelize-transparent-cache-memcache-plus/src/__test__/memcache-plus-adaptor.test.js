@@ -15,16 +15,17 @@ describe('Adaptor methods', () => {
   const key = ['complex', 'key']
 
   test('set', async () => {
-    await memcachePlusAdaptor.set(key, data)
+    expect(await memcachePlusAdaptor.set(key, data)).toEqual(undefined)
   })
 
   test('get', async () => {
+    expect(await memcachePlusAdaptor.get(['missing'])).toEqual(null)
     expect(await memcachePlusAdaptor.get(key)).toEqual(data)
   })
 
   test('del', async () => {
     await memcachePlusAdaptor.del(key)
 
-    expect(await memcachePlusAdaptor.get(key)).toBe(null)
+    expect(await memcachePlusAdaptor.get(key)).toEqual(null)
   })
 })
