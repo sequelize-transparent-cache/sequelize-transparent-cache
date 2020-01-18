@@ -1,8 +1,10 @@
-function instanceToData (instance) {
+import { Model } from "sequelize"
+
+export function instanceToData (instance: Model) {
   return instance.get({ plain: true })
 }
 
-function dataToInstance (model, data) {
+export function dataToInstance<M extends Model, MT extends typeof Model & { new (): M }> (model: MT, data) {
   if (!data) {
     return data
   }
@@ -54,7 +56,7 @@ function restoreTimestamps (data, instance) {
   })
 }
 
-function generateInclude (model) {
+function generateInclude (model: typeof Model) {
   return Object.entries(model.associations || [])
     .filter(([as, association]) => {
       const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
@@ -64,9 +66,4 @@ function generateInclude (model) {
       model: model.sequelize.model(association.target.name),
       as
     }))
-}
-
-module.exports = {
-  instanceToData,
-  dataToInstance
 }

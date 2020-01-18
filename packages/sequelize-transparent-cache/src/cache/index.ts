@@ -1,14 +1,19 @@
-const { instanceToData, dataToInstance } = require('./util')
+import { Model } from "sequelize"
+import { instanceToData, dataToInstance } from "./util"
+import { Client } from './client';
+import { Promise } from 'sequelize';
 
-function getInstanceModel (instance) {
-  return instance.constructor
+export { Client } from './client';
+
+function getInstanceModel<M extends typeof Model> (instance: Model): M {
+  return instance.constructor as M
 }
 
-function getInstanceCacheKey (instance) {
+function getInstanceCacheKey<M extends Model> (instance: M) {
   return getInstanceModel(instance).primaryKeyAttributes.map(pk => instance[pk])
 }
 
-async function save (client, instance, customKey) {
+export function save (client: Client, instance: Model, customKey?: string) {
   if (!instance) {
     return Promise.resolve(instance)
   }
@@ -26,7 +31,7 @@ async function save (client, instance, customKey) {
   return client.set(key, instanceToData(instance)).then(() => instance)
 }
 
-function saveAll (client, model, instances, customKey) {
+export function saveAll (client: Client, model: typeof Model, instances: Model[], customKey: string) {
   const key = [
     model.name,
     customKey
@@ -35,13 +40,13 @@ function saveAll (client, model, instances, customKey) {
   return client.set(key, instances.map(instanceToData)).then(() => instances)
 }
 
-function getAll (client, model, customKey) {
+export function getAll<M extends typeof Model & { new (): M }> (client: Client, model: M, customKey: string) {
   const key = [
     model.name,
     customKey
   ]
 
-  return client.get(key).then(dataArray => {
+  return client.get(key).then((dataArray: object[]) => {
     if (!dataArray) { // undefined - cache miss
       return dataArray
     }
@@ -50,7 +55,7 @@ function getAll (client, model, customKey) {
   })
 }
 
-function get (client, model, id) {
+export function get<M extends typeof Model & { new (): M }> (client: Client, model: M, id: string) {
   const key = [
     model.name,
     id
@@ -61,7 +66,7 @@ function get (client, model, id) {
   })
 }
 
-function destroy (client, instance) {
+export function destroy (client, instance) {
   if (!instance) {
     return Promise.resolve(instance)
   }
@@ -73,19 +78,10 @@ function destroy (client, instance) {
   return client.del(key)
 }
 
-function clearKey (client, model, customKey) {
+export function clearKey (client: Client, model: typeof Model, customKey: string) {
   const key = [
     model.name,
     customKey
   ]
   return client.del(key)
-}
-
-module.exports = {
-  save,
-  saveAll,
-  get,
-  getAll,
-  destroy,
-  clearKey
 }

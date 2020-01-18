@@ -1,10 +1,8 @@
-const cache = require('../cache')
+import { Model } from 'sequelize'
+import * as cache from '../cache'
 
-function buildAutoMethods (client, model) {
-  return {
-    client () {
-      return client
-    },
+export function autoClassMethods<M extends typeof Model & { new (): M } & typeof Model> (client: cache.Client, model: M) {
+  const proxiedMethods: Pick<M, 'create' | 'findByPk' | 'upsert'> & { insertOrUpdate: M['upsert'] } = {
     create () {
       return model.create.apply(model, arguments)
         .then(instance => {
@@ -18,12 +16,9 @@ function buildAutoMethods (client, model) {
             return instance
           }
 
-          return (model.findByPk || model.findById).apply(model, arguments)
+          return model.findByPk.apply(model, arguments)
             .then(instance => cache.save(client, instance))
         })
-    },
-    findById () {
-      return this.findByPk.apply(this, arguments)
     },
     upsert (data) {
       return model.upsert.apply(model, arguments).then(created => {
@@ -35,13 +30,17 @@ function buildAutoMethods (client, model) {
       return this.upsert.apply(this, arguments)
     }
   }
-}
 
-function buildManualMethods (client, model, customKey) {
   return {
+    ...proxiedMethods,
     client () {
       return client
-    },
+    }
+  }
+}
+
+export function manualClassMethods<M extends typeof Model & { new (): M }> (client: cache.Client, model: M, customKey: string) {
+  const proxiedMethods: Pick<M, 'findAll' | 'findOne'> = {
     findAll () {
       return cache.getAll(client, model, customKey)
         .then(instances => {
@@ -63,11 +62,16 @@ function buildManualMethods (client, model, customKey) {
           return model.findOne.apply(model, arguments)
             .then(instance => cache.save(client, instance, customKey))
         })
-    },
+    }
+  }
+
+  return {
+    ...proxiedMethods,
     clear () {
       return cache.clearKey(client, model, customKey)
+    },
+    client() {
+      return client
     }
   }
 }
-
-module.exports = { auto: buildAutoMethods, manual: buildManualMethods }

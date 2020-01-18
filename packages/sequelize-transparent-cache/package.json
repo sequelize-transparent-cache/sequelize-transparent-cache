@@ -21,6 +21,8 @@
     "sequelize": ">=5"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/validator": "^12.0.1",
     "sequelize": ">=5.21.3",
     "sqlite3": "^4.1.1"
   }

@@ -1,14 +1,14 @@
-const sequelize = require('./sequelize')
-
-const { User, Article, Comment, Group } = sequelize.models
-const cacheStore = User.cache().client().store
-
-beforeAll(() => sequelize.sync())
+import {sequelize, User, Article, Comment, Group} from './test-model'
 
 describe('Class methods', () => {
+  beforeAll(() => sequelize.sync())
+
+  const cacheStore = User.cache().client().store
+
   test('Cache is empty on start', () => {
     expect(cacheStore).toEqual({})
   })
+
   test('Create', async () => {
     const user = await User.cache().create({
       id: 1,

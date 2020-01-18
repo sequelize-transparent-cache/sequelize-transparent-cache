@@ -1,8 +1,9 @@
-const cache = require('../cache')
 
-function instanceMethods (client, instance) {
-  return {
-    client () { return client },
+import { Model } from 'sequelize';
+import * as cache from '../cache';
+
+export function instanceMethods<M extends Model> (client: cache.Client, instance: M) {
+  const proxiedMethods: Pick<M, 'save' | 'update' | 'reload' | 'destroy'> = {
     save () {
       return instance.save.apply(instance, arguments)
         .then(instance => cache.save(client, instance))
@@ -20,11 +21,14 @@ function instanceMethods (client, instance) {
     destroy () {
       return instance.destroy.apply(instance, arguments)
         .then(() => cache.destroy(client, instance))
-    },
-    clear () {
-      return cache.destroy(client, instance)
     }
   }
-}
 
-module.exports = instanceMethods
+  return {
+    ...proxiedMethods,
+    clear () {
+      return cache.destroy(client, instance)
+    },
+    client () { return client },
+  }
+}
