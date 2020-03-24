@@ -5,6 +5,8 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
   })
-
+  User.associate = (Parent) => {
+    User.hasOne(Parent, {foreignKey: 'userId'})
+  }
   return User
 }
