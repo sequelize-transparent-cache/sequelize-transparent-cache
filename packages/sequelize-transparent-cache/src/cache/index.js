@@ -45,7 +45,6 @@ function getAll (client, model, customKey) {
     if (!dataArray) { // undefined - cache miss
       return dataArray
     }
-    console.log('dataArray', dataArray)
     return dataArray.map(data => dataToInstance(model, data))
   })
 }

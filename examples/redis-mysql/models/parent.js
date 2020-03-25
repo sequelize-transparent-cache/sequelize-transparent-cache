@@ -7,8 +7,8 @@ module.exports = function (sequelize, DataTypes) {
   })
 
   Parent.associate = (User, Grand) => {
-    Parent.belongsTo(User, {foreignKey: 'userId' })
-    Parent.hasOne(Grand, {foreignKey: 'parentId' })
-}
+    Parent.hasMany(User, { foreignKey: 'parentId' })
+    Parent.hasOne(Grand, { foreignKey: 'parentId' })
+  }
   return Parent
 }

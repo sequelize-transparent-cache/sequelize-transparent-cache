@@ -46,13 +46,11 @@ function buildManualMethods (client, model, customKey) {
       return cache.getAll(client, model, customKey)
         .then(instances => {
           if (instances) { // any array - cache hit
-            console.log('From Cache')
             return instances
           }
 
           return model.findAll.apply(model, arguments)
             .then(instances => {
-              console.log('From dB', instances)
               return cache.saveAll(client, model, instances, customKey)
             })
         })

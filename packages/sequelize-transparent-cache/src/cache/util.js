@@ -6,12 +6,8 @@ function dataToInstance (model, data) {
   if (!data) {
     return data
   }
-
-  // const include = generateInclude(model)
   const include = generateIncludeRecurse(model)
-  console.log('include', include)
   const instance = model.build(data, { isNewRecord: false, raw: false, include })
-
   restoreTimestamps(data, instance)
   return instance
 }
@@ -55,44 +51,30 @@ function restoreTimestamps (data, instance) {
   })
 }
 
-function generateInclude (model) {
-  console.log('model.associations', Object.entries(model.associations))
-  return Object.entries(model.associations || [])
-    .filter(([as, association]) => {
-      const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
-      return hasOptions
-    })
-    .map(([as, association]) => ({
-      model: model.sequelize.model(association.target.name),
-      as
-    }))
-}
 
-function generateIncludeRecurse (model, include = [], models = []) {
-  const associations = Object.entries(model.associations).filter(([_as, association]) => {
-    if (_as in models) {
-      return false
-    } else {
-      models[_as] = model
-      return true
-    }
-  })
+function generateIncludeRecurse (model, depth = 1) {
+  if (depth > 5) {
+    return []
+  }
+  const associations = Object.entries(model.associations)
+  const include = []
 
-  for (let index = 0; index < associations.length; index++) {
-    const [as, association] = associations[index]
+  associations.forEach(([as, association]) => {
     if (Object.prototype.hasOwnProperty.call(association, 'options')) {
       // eslint-disable-next-line camelcase
-      const nxt_model = model.sequelize.model(association.target.name)
-      include.push({ model: nxt_model, as, include: generateIncludeRecurse(nxt_model, [], models) })
+      const associated_model = model.sequelize.model(association.target.name)
+      include.push({
+        model: associated_model,
+        include: generateIncludeRecurse(associated_model, depth + 1),
+        as
+      })
     }
-  }
+    console.log(include)
+    return include
+  })
+
   return include
 }
-
-// Testcases:
-// 1. parent1 -> grand, parent2-> grand (Fail)
-// 2. alias
-// 3. 
 
 module.exports = {
   instanceToData,
