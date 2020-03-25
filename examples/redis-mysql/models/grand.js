@@ -6,9 +6,5 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false
       }
     })
-
-  Grand.associate = (Parent) => {
-    Grand.belongsTo(Parent, { foreignKey: 'parentId' })
-  }
   return Grand
 }
