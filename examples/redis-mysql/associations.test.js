@@ -31,8 +31,8 @@ const Child = withCache(child)
 const Parent = withCache(parent)
 const Grand = withCache(grand)
 
-async function start() {
-  await sequelize.sync( )
+async function start () {
+  await sequelize.sync()
 
   const commonId = 14
   // Create user in db and in cache
@@ -77,9 +77,7 @@ async function start() {
       include: [{ model: Parent }]
     }]
   })
-  console.log('Logging', val[0].Users)
-
-
+  console.log('Logging', val)
   process.exit()
 }
 

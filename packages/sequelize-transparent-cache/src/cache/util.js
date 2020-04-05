@@ -55,21 +55,19 @@ function generateIncludeRecurse (model, depth = 1) {
   if (depth > 5) {
     return []
   }
-  const associations = Object.entries(model.associations)
-  const include = []
-
-  associations.forEach(([as, association]) => {
-    if (Object.prototype.hasOwnProperty.call(association, 'options')) {
-      // eslint-disable-next-line camelcase
-      const associated_model = model.sequelize.model(association.target.name)
-      include.push({
-        model: associated_model,
-        include: generateIncludeRecurse(associated_model, depth + 1),
+  return Object.entries(model.associations || [])
+    .filter(([as, association]) => {
+      const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
+      return hasOptions
+    })
+    .map(([as, association]) => {
+      const associatedModel = model.sequelize.model(association.target.name)
+      return {
+        model: associatedModel,
+        include: generateIncludeRecurse(associatedModel, depth + 1),
         as
-      })
-    }
-  })
-  return include
+      }
+    })
 }
 
 module.exports = {

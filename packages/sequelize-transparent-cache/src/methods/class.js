@@ -46,13 +46,12 @@ function buildManualMethods (client, model, customKey) {
       return cache.getAll(client, model, customKey)
         .then(instances => {
           if (instances) { // any array - cache hit
+            console.log('CACHE')
             return instances
           }
 
           return model.findAll.apply(model, arguments)
-            .then(instances => {
-              return cache.saveAll(client, model, instances, customKey)
-            })
+            .then(instances => cache.saveAll(client, model, instances, customKey))
         })
     },
     findOne () {

@@ -23,7 +23,7 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 const User = withCache(sequelize.import('./models/user'))
 
 async function start () {
-  await sequelize.sync({ force: true })
+  await sequelize.sync()
 
   // Create user in db and in cache
   await User.cache().create({
@@ -40,7 +40,7 @@ async function start () {
   })
 
   // Cache result of arbitrary query - requires cache key
-  await User.cache('dan-user').findAll({
+  await User.cache('dan-users').findAll({
     where: {
       name: {
         [Sequelize.Op.like]: 'Dan'
