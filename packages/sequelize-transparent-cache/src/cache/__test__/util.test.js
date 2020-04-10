@@ -1,4 +1,3 @@
-/* eslint-disable jest/expect-expect */
 const sequelize = require('./sequelize')
 
 const { User, Article, Group } = sequelize.models
