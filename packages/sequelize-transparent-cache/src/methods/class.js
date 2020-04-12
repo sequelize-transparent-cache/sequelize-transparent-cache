@@ -46,7 +46,6 @@ function buildManualMethods (client, model, customKey) {
       return cache.getAll(client, model, customKey)
         .then(instances => {
           if (instances) { // any array - cache hit
-            console.log('CACHE')
             return instances
           }
 
