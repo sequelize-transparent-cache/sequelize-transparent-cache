@@ -22,6 +22,6 @@
   },
   "license": "CC-BY-4.0",
   "devDependencies": {
-    "ioredis": "^4.14.1"
+    "ioredis": "^4.16.2"
   }
 }

@@ -19,10 +19,10 @@ denque@^1.1.0:
   resolved "https://packages.atlassian.com/api/npm/npm-remote/denque/-/denque-1.4.1.tgz#6744ff7641c148c3f8a69c307e51235c1f4a37cf"
   integrity sha1-Z0T/dkHBSMP4ppwwflEjXB9KN88=
 
-ioredis@^4.14.1:
-  version "4.14.1"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/ioredis/-/ioredis-4.14.1.tgz#b73ded95fcf220f106d33125a92ef6213aa31318"
-  integrity sha1-tz3tlfzyIPEG0zElqS72ITqjExg=
+ioredis@^4.16.2:
+  version "4.16.2"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/ioredis/-/ioredis-4.16.2.tgz#29ae301885e493c4642d2fb1998761c576e27462"
+  integrity sha1-Ka4wGIXkk8RkLS+xmYdhxXbidGI=
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"

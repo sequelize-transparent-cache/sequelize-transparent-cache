@@ -606,10 +606,10 @@ sequelize-pool@^2.3.0:
   resolved "https://packages.atlassian.com/api/npm/npm-remote/sequelize-pool/-/sequelize-pool-2.3.0.tgz#64f1fe8744228172c474f530604b6133be64993d"
   integrity sha1-ZPH+h0QigXLEdPUwYEthM75kmT0=
 
-sequelize@>=5.21.3:
-  version "5.21.3"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/sequelize/-/sequelize-5.21.3.tgz#f8a6fa0245f8995d70849e4da00c2c7c9aa9f569"
-  integrity sha1-+Kb6AkX4mV1whJ5NoAwsfJqp9Wk=
+sequelize@>=5.21.6:
+  version "5.21.6"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/sequelize/-/sequelize-5.21.6.tgz#5bf9b687336ce9157a3b386ad653fa130a5fa38a"
+  integrity sha1-W/m2hzNs6RV6Ozhq1lP6Ewpfo4o=
   dependencies:
     bluebird "^3.5.0"
     cls-bluebird "^2.1.0"
