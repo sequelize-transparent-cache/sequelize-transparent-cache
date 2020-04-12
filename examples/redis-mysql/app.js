@@ -33,7 +33,7 @@ async function start () {
 
   // Load user from cache
   const user = await User.cache().findByPk(1)
-  console.log(user)
+
   // Update in db and cache
   await user.cache().update({
     name: 'Vikki'

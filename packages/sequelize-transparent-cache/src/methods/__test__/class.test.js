@@ -212,3 +212,132 @@ describe('Class methods', () => {
     expect(cacheStore.User[key]).toBeUndefined() // User was deleted from cache
   })
 })
+
+describe('Recursive include tests', () => {
+  test('Nested include depth == 1', async () => {
+    // get all users of a group
+    const group = await Group.cache().create({
+      id: 123,
+      name: 'Crazy Bloggers1'
+    })
+
+    const user1 = await User.cache().create({
+      id: 123,
+      name: 'Bob1'
+    })
+
+    const user2 = await User.cache().create({
+      id: 124,
+      name: 'Alice1'
+    })
+
+    await group.setGroupUsers([user1, user2])
+    await group.cache().save()
+
+    // From DB
+    const groupFromDB = await Group.cache('CrazyBloggers12').findAll({
+      include: [{
+        model: User,
+        as: 'groupUsers'
+      }],
+      where: { id: 123 }
+    })
+
+    // From cache
+    const cachedGroup = await Group.cache('CrazyBloggers12').findAll({
+      include: [{
+        model: User,
+        as: 'groupUsers'
+      }],
+      where: { id: 123 }
+    })
+    // comparing length at depth == 0
+    expect(cachedGroup).toHaveLength(groupFromDB.length)
+    // comparing dataValues at depth == 0
+    expect(cachedGroup[0].get().id).toEqual(groupFromDB[0].get().id)
+    expect(cachedGroup[0].get().name).toEqual(groupFromDB[0].get().name)
+    // comparing length at depth == 1
+    expect(cachedGroup[0].groupUsers).toHaveLength(groupFromDB[0].groupUsers.length)
+    // comparing dataValues at depth == 1
+    expect(cachedGroup[0].groupUsers[0].get().id).toEqual(groupFromDB[0].groupUsers[0].get().id)
+    expect(cachedGroup[0].groupUsers[0].get().name).toEqual(groupFromDB[0].groupUsers[0].get().name)
+  })
+
+  test('Nested include depth == 2', async () => {
+    // get all the aricles written by all users in a group
+    const group = await Group.cache().create({
+      id: 10,
+      name: 'Crazy Bloggers1'
+    })
+
+    const user1 = await User.cache().create({
+      id: 10,
+      name: 'Bob'
+    })
+
+    const article = await Article.cache().create({
+      uuid: '2086c06e-9dd9-4ee3-84b9-9e415dfd9c4f',
+      title: 'New article'
+    })
+    await user1.setArticles([article])
+    await user1.cache().save()
+
+    const user2 = await User.cache().create({
+      id: 11,
+      name: 'Alice'
+    })
+
+    await group.setGroupUsers([user1, user2])
+    await group.cache().save()
+
+    // Crazy Bloggers has Bob and Alice.
+    // Bob has written one article. Alice has written none
+
+    // From DB
+    const groupFromDB = await Group.cache('CrazyBloggers1').findAll({
+      include: [{
+        model: User,
+        as: 'groupUsers',
+        include: [{
+          model: Article,
+          as: 'Articles'
+        }]
+      }],
+      where: { id: 10 }
+    })
+
+    // From cache
+    const cachedGroup = await Group.cache('CrazyBloggers1').findAll({
+      include: [{
+        model: User,
+        as: 'groupUsers',
+        include: [{
+          model: Article,
+          as: 'Articles'
+        }]
+      }],
+      where: { id: 10 }
+    })
+
+    // comparing length at depth == 0
+    expect(cachedGroup).toHaveLength(groupFromDB.length)
+    // comparing dataValues at depth == 0 i.e. "Crazy Bloggers"
+    expect(cachedGroup[0].get().id).toEqual(groupFromDB[0].get().id)
+    expect(cachedGroup[0].get().name).toEqual(groupFromDB[0].get().name)
+    // comparing length at depth == 1
+    expect(cachedGroup[0].groupUsers).toHaveLength(groupFromDB[0].groupUsers.length)
+    // comparing dataValues at depth == 1
+    // Bob is present
+    expect(cachedGroup[0].groupUsers[0].get().id).toEqual(groupFromDB[0].groupUsers[0].get().id)
+    expect(cachedGroup[0].groupUsers[0].get().name).toEqual(groupFromDB[0].groupUsers[0].get().name)
+    // Alice is present
+    expect(cachedGroup[0].groupUsers[1].get().id).toEqual(groupFromDB[0].groupUsers[1].get().id)
+    expect(cachedGroup[0].groupUsers[1].get().name).toEqual(groupFromDB[0].groupUsers[1].get().name)
+    // Bob has an article; depth == 2
+    expect(cachedGroup[0].groupUsers[0].Articles).toHaveLength(groupFromDB[0].groupUsers[0].Articles.length)
+    expect(cachedGroup[0].groupUsers[0].Articles[0].get().id).toEqual(groupFromDB[0].groupUsers[0].Articles[0].get().id)
+    expect(cachedGroup[0].groupUsers[0].Articles[0].get().name).toEqual(groupFromDB[0].groupUsers[0].Articles[0].get().name)
+    // Alice has no article; depth == 2
+    expect(cachedGroup[0].groupUsers[1].Articles).toEqual([])
+  })
+})
