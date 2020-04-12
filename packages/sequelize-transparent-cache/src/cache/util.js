@@ -6,12 +6,9 @@ function dataToInstance (model, data) {
   if (!data) {
     return data
   }
-
-  const include = generateInclude(model)
+  const include = generateIncludeRecurse(model)
   const instance = model.build(data, { isNewRecord: false, raw: false, include })
-
   restoreTimestamps(data, instance)
-
   return instance
 }
 
@@ -54,16 +51,23 @@ function restoreTimestamps (data, instance) {
   })
 }
 
-function generateInclude (model) {
+function generateIncludeRecurse (model, depth = 1) {
+  if (depth > 5) {
+    return []
+  }
   return Object.entries(model.associations || [])
     .filter(([as, association]) => {
       const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
       return hasOptions
     })
-    .map(([as, association]) => ({
-      model: model.sequelize.model(association.target.name),
-      as
-    }))
+    .map(([as, association]) => {
+      const associatedModel = model.sequelize.model(association.target.name)
+      return {
+        model: associatedModel,
+        include: generateIncludeRecurse(associatedModel, depth + 1),
+        as
+      }
+    })
 }
 
 module.exports = {
