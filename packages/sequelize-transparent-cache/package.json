@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "src/index.js",
   "keywords": [
