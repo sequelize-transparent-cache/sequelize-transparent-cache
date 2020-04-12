@@ -1,13 +1,12 @@
 {
-  "name": "sequelize-v3-memcached",
+  "name": "memcached-mysql-example",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "memcached": "^2.2.2",
-    "mysql": "^2.16.0",
-    "mysql2": "^1.6.5",
+    "mysql2": "^2.1.0",
     "sequelize": "^5.1.0"
   }
 }

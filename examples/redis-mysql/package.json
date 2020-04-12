@@ -1,12 +1,12 @@
 {
-  "name": "sequelize-v4-redis",
+  "name": "redis-mysql-example",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "ioredis": "^4.6.2",
-    "mysql2": "^1.6.5",
+    "mysql2": "^2.1.0",
     "sequelize": "^5.1.0"
   }
 }
