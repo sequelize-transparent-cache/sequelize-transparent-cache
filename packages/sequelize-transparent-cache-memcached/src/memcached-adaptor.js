@@ -1,10 +1,11 @@
 const hour = 60 * 60
 
 class MemcachedAdaptor {
-  constructor ({ client, namespace, lifetime = hour }) {
+  constructor ({ client, namespace, lifetime = hour, errorHandler }) {
     this.client = client
     this.namespace = namespace
     this.lifetime = lifetime
+    this.errorHandler = errorHandler
   }
 
   _withNamespace (key) {
@@ -18,41 +19,73 @@ class MemcachedAdaptor {
 
   set (key, value) {
     return new Promise((resolve, reject) => {
-      this.client.set(
-        this._withNamespace(key),
-        JSON.stringify(value),
-        this.lifetime,
-        error => error ? reject(error) : resolve()
-      )
+      const keyWithNamespace = this._withNamespace(key)
+
+      try {
+        this.client.set(
+          keyWithNamespace,
+          JSON.stringify(value),
+          this.lifetime,
+          error => error
+            ? this._onError(error, resolve, reject, 'set', keyWithNamespace)
+            : resolve()
+        )
+      } catch (error) {
+        this._onError(error, resolve, reject, 'set', keyWithNamespace)
+      }
     })
   }
 
   get (key) {
     return new Promise((resolve, reject) => {
-      this.client.get(
-        this._withNamespace(key),
-        (error, data) => {
-          if (error) {
-            return reject(error)
-          }
+      const keyWithNamespace = this._withNamespace(key)
 
-          if (!data) {
-            return resolve(data)
-          }
+      try {
+        this.client.get(
+          keyWithNamespace,
+          (error, data) => {
+            if (error) {
+              this._onError(error, resolve, reject, 'get', keyWithNamespace)
+              return
+            }
 
-          resolve(JSON.parse(data))
-        }
-      )
+            if (!data) {
+              resolve(data)
+              return
+            }
+
+            resolve(JSON.parse(data))
+          }
+        )
+      } catch (error) {
+        this._onError(error, resolve, reject, 'get', keyWithNamespace)
+      }
     })
   }
 
   del (key) {
     return new Promise((resolve, reject) => {
-      this.client.del(
-        this._withNamespace(key),
-        error => error ? reject(error) : resolve()
-      )
+      const keyWithNamespace = this._withNamespace(key)
+
+      try {
+        this.client.del(
+          keyWithNamespace,
+          error => error
+            ? this._onError(error, resolve, reject, 'del', keyWithNamespace)
+            : resolve()
+        )
+      } catch (error) {
+        this._onError(error, resolve, reject, 'del', keyWithNamespace)
+      }
     })
+  }
+
+  _onError (error, resolve, reject, operation, key) {
+    if (this.errorHandler) {
+      resolve(this.errorHandler(error, operation, key))
+    } else {
+      reject(error)
+    }
   }
 }
 
