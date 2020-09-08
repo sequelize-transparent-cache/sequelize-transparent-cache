@@ -82,7 +82,11 @@ class MemcachedAdaptor {
 
   _onError (error, resolve, reject, operation, key) {
     if (this.errorHandler) {
-      resolve(this.errorHandler(error, operation, key))
+      try {
+        resolve(this.errorHandler(error, operation, key))
+      } catch (nestedError) {
+        reject(nestedError)
+      }
     } else {
       reject(error)
     }
