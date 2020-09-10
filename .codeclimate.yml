@@ -11,6 +11,6 @@ ratings:
   paths:
   - packages/**
 
-exclude_paths:
-- examples/
-- __test__/
+exclude_patterns:
+- "examples/"
+- "__test__/"
