@@ -13,4 +13,4 @@ ratings:
 
 exclude_patterns:
 - "examples/"
-- "__test__/"
+- "**/__test__/"
