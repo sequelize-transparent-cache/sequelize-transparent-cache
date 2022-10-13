@@ -3,6 +3,7 @@
   "version": "2.3.0",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "src/index.js",
+  "types": "index.d.ts",
   "keywords": [
     "sequelize",
     "cache",

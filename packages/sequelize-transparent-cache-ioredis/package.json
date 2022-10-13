@@ -12,6 +12,7 @@
     "adaptor",
     "adapter"
   ],
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/DanielHreben/sequelize-transparent-cache.git"
