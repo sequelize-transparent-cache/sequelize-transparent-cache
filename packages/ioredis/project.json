@@ -1,0 +1,38 @@
+{
+  "name": "ioredis",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ioredis/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ioredis/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/ioredis"],
+      "options": {
+        "jestConfig": "packages/ioredis/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "type-check": {
+      "executor": "./tools/executors/type-check:type-check"
+    },
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ioredis",
+        "tsConfig": "packages/ioredis/tsconfig.lib.json",
+        "packageJson": "packages/ioredis/package.json",
+        "main": "packages/ioredis/src/index.ts",
+        "assets": ["packages/ioredis/*.md"]
+      }
+    }
+  },
+  "tags": ["type:lib"]
+}

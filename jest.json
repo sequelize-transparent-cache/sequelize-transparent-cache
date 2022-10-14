@@ -1,7 +1,0 @@
-{
-  "testEnvironment": "node",
-  "collectCoverage": true,
-  "coveragePathIgnorePatterns": [
-    "__test__"
-  ]
-}

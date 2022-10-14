@@ -1,0 +1,6 @@
+{
+  "root": false,
+  "env": {
+    "jest/globals": true
+  }
+}
