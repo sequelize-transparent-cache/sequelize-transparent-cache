@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'sequelize_transparent_cache'
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    volumes:
+      - ./setup.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '3310:3306'
+    expose:
+      - '3310'
+    logging:
+      driver: 'local'
+      options:
+        max-size: '1m'
+        max-file: '3'
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    logging:
+      driver: 'local'
+      options:
+        max-size: '1m'
+        max-file: '3'
