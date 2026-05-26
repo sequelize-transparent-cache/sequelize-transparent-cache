@@ -16,10 +16,9 @@ function restoreTimestamps (data, instance) {
   const timestampFields = ['createdAt', 'updatedAt', 'deletedAt']
 
   for (const field of timestampFields) {
+    if (!(field in data)) continue
     const value = data[field]
-    if (value) {
-      instance.setDataValue(field, new Date(value))
-    }
+    instance.setDataValue(field, value ? new Date(value) : null)
   }
 
   Object.keys(data).forEach(key => {
