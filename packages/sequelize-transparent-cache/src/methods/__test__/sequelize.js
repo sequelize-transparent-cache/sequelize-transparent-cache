@@ -9,7 +9,7 @@ const options = {
   logging: false,
   dialect: 'sqlite',
   define: {
-    options: { paranoid: true }
+    paranoid: true
   }
 }
 

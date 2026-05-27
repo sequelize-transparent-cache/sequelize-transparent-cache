@@ -4,6 +4,12 @@ node_js:
   - 10
   - 12
 
+env:
+  - SEQUELIZE_VERSION="^5.21.6"
+
+before_install:
+  - yarn add sequelize@$SEQUELIZE_VERSION
+
 script:
   - yarn test
 
