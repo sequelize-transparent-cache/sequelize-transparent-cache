@@ -33,11 +33,11 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: npm ci
 
     - name: Pin Sequelize version
-      run: yarn workspace sequelize-transparent-cache add sequelize@${{ matrix.sequelize-version }} --dev
+      run: npm install sequelize@${{ matrix.sequelize-version }} --workspace sequelize-transparent-cache --save-dev
 
     - name: Run tests
-      run: yarn test
+      run: npm test
 

@@ -23,5 +23,6 @@
   },
   "eslintConfig": {
     "extends": ["plugin:jest/recommended", "standard"]
-  }
+  },
+  "workspaces": ["packages/*"]
 }
