@@ -9,20 +9,15 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Test against the latest LTS versions
-        node-version: [20.x, 22.x]
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 22.x
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        # Caching dependencies speeds up the pipeline
+        node-version: 22.x
         cache: 'npm'
 
     - name: Install dependencies
