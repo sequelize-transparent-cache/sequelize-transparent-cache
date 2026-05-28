@@ -32,6 +32,7 @@ jobs:
       run: npm run lint
 
   build:
+    needs: [lint]
     runs-on: ubuntu-latest
     services:
       memcached:
