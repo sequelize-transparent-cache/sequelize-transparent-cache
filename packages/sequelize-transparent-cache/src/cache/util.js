@@ -1,8 +1,8 @@
-function instanceToData (instance) {
+function instanceToData(instance) {
   return instance.get({ plain: true })
 }
 
-function dataToInstance (model, data) {
+function dataToInstance(model, data) {
   if (!data) {
     return data
   }
@@ -12,7 +12,7 @@ function dataToInstance (model, data) {
   return instance
 }
 
-function restoreTimestamps (data, instance) {
+function restoreTimestamps(data, instance) {
   const timestampFields = ['createdAt', 'updatedAt', 'deletedAt']
 
   for (const field of timestampFields) {
@@ -21,7 +21,7 @@ function restoreTimestamps (data, instance) {
     instance.setDataValue(field, value ? new Date(value) : null)
   }
 
-  Object.keys(data).forEach(key => {
+  Object.keys(data).forEach((key) => {
     const value = data[key]
 
     if (!value) {
@@ -32,8 +32,8 @@ function restoreTimestamps (data, instance) {
       try {
         const nestedInstances = instance.get(key)
         value.forEach((nestedValue, i) => restoreTimestamps(nestedValue, nestedInstances[i]))
-      } catch (error) { // TODO: Fix issue with JSON and BLOB columns
-
+      } catch (_error) {
+        // TODO: Fix issue with JSON and BLOB columns
       }
 
       return
@@ -42,20 +42,20 @@ function restoreTimestamps (data, instance) {
     if (typeof value === 'object') {
       try {
         const nestedInstance = instance.get(key)
-        Object.values(value).forEach(nestedValue => restoreTimestamps(nestedValue, nestedInstance))
-      } catch (error) { // TODO: Fix issue with JSON and BLOB columns
-
+        Object.values(value).forEach((nestedValue) => restoreTimestamps(nestedValue, nestedInstance))
+      } catch (_error) {
+        // TODO: Fix issue with JSON and BLOB columns
       }
     }
   })
 }
 
-function generateIncludeRecurse (model, depth = 1) {
+function generateIncludeRecurse(model, depth = 1) {
   if (depth > 5) {
     return []
   }
   return Object.entries(model.associations || [])
-    .filter(([as, association]) => {
+    .filter(([_as, association]) => {
       const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
       return hasOptions
     })
@@ -64,12 +64,12 @@ function generateIncludeRecurse (model, depth = 1) {
       return {
         model: associatedModel,
         include: generateIncludeRecurse(associatedModel, depth + 1),
-        as
+        as,
       }
     })
 }
 
 module.exports = {
   instanceToData,
-  dataToInstance
+  dataToInstance,
 }

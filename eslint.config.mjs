@@ -13,6 +13,17 @@ export default defineConfig([
   eslintConfigPrettier,
   {
     files: ['packages/**/*.js'],
+    rules: {
+      'no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+          varsIgnorePattern: '^_',
+        },
+      ],
+    },
     extends: [
       js.configs['recommended'],
       pluginPromise.configs['flat/recommended'],
