@@ -1,4 +1,5 @@
 import { defineConfig } from 'eslint/config'
+import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import pluginPromise from 'eslint-plugin-promise'
 import pluginNode from 'eslint-plugin-n'
@@ -10,8 +11,18 @@ export default defineConfig([
     ignores: ['coverage/*', 'examples/*'],
   },
   eslintConfigPrettier,
-  pluginPromise.configs['flat/recommended'],
-  pluginNode.configs['flat/recommended'],
-  pluginJest.configs['flat/recommended'],
-  pluginImport.flatConfigs.recommended,
+  {
+    files: ['packages/**/*.js'],
+    extends: [
+      js.configs['recommended'],
+      pluginPromise.configs['flat/recommended'],
+      pluginNode.configs['flat/recommended'],
+      pluginJest.configs['flat/recommended'],
+      pluginImport.flatConfigs.recommended,
+    ],
+  },
+  {
+    files: ['packages/**/__test__/**/*.js'],
+    rules: { 'n/no-unpublished-require': 'off' },
+  },
 ])
