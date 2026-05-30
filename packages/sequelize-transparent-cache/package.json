@@ -21,7 +21,7 @@
     "sequelize": ">=5"
   },
   "devDependencies": {
-    "sequelize": "^5.21.6",
+    "sequelize": "^6.37.8",
     "sqlite3": "^6.0.1"
   }
 }
