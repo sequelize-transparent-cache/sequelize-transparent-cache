@@ -1,8 +1,7 @@
 class NatsAdaptor {
-  constructor({ client, namespace, lifetime }) {
+  constructor({ client, namespace }) {
     this.client = client // A NATS kv client
     this.namespace = namespace
-    this.lifetime = lifetime
   }
 
   _withNamespace(key) {
@@ -12,10 +11,13 @@ class NatsAdaptor {
     return keyWithNamespace.join('.')
   }
 
-  set(key, value) {
+  set(key, value, ttl = undefined) {
     try {
-      console.log('set:', value)
-      return this.client.put(this._withNamespace(key), JSON.stringify(value))
+      if (ttl) {
+        return this.client.create(this._withNamespace(key), JSON.stringify(value), ttl)
+      } else {
+        return this.client.put(this._withNamespace(key), JSON.stringify(value))
+      }
     } catch (error) {
       console.error('adaptor: ', error)
     }
@@ -25,7 +27,6 @@ class NatsAdaptor {
     return this.client.get(this._withNamespace(key)).then((data) => {
       if (!data) return data
       if (data.operation === 'PURGE' || data.operation === 'DEL') return null
-      console.log('get:', data.string())
       return data.json()
     })
   }

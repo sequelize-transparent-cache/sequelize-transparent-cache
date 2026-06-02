@@ -10,7 +10,7 @@ async function start() {
   const js = jetstream(nc)
   let kvm
   try {
-    kvm = await new Kvm(js).create('bucket', { ttl: 60_000 })
+    kvm = await new Kvm(js).create('bucket', { ttl: 60_000, markerTTL: 10_000 })
   } catch (error) {}
 
   // You need to find appropriate adaptor or create your own, see "Available adaptors" section below
@@ -57,7 +57,7 @@ async function start() {
     console.error('create: ', error)
   }
 
-  // Load user from cache
+  // Load user from cache, there should be no queries
   await User.cache().findByPk(1)
   await User.cache().findByPk(1)
   await User.cache().findByPk(1)
@@ -70,29 +70,33 @@ async function start() {
     await User.cache().create({
       name: 'Daniel1',
     })
-    await User.cache().create({
-      name: 'Danieli2',
-    })
-    await User.cache().create({
-      name: 'Danieli3',
-    })
-    await User.cache().create({
-      name: 'Danieli4',
-    })
   } catch (error) {
     console.error('create: ', error)
   }
 
   // Cache result of arbitrary query - requires cache key
   try {
-    const findall = await User.cache('find-dan').findAll({
+    await User.cache('findall.find-dan').findAll({
       where: {
         name: {
           [Sequelize.Op.like]: 'Dan%',
         },
       },
     })
-    console.log('findall:', findall)
+  } catch (error) {
+    console.error('findAll: ', error)
+  }
+
+  // Cache result of arbitrary query - requires cache key
+  // Include a TTL which must be string
+  try {
+    await User.cache('findall.find-dan-with-ttl', '30s').findAll({
+      where: {
+        name: {
+          [Sequelize.Op.like]: 'Dan%',
+        },
+      },
+    })
   } catch (error) {
     console.error('findAll: ', error)
   }
