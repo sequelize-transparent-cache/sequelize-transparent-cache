@@ -12,14 +12,19 @@ class NatsAdaptor {
   }
 
   set(key, value, ttl = undefined) {
-    try {
-      if (ttl) {
-        return this.client.create(this._withNamespace(key), JSON.stringify(value), ttl)
-      } else {
-        return this.client.put(this._withNamespace(key), JSON.stringify(value))
-      }
-    } catch (error) {
-      console.error('adaptor: ', error)
+    if (ttl) {
+      return this.client.create(this._withNamespace(key), JSON.stringify(value), ttl).catch((error) => {
+        // This is to catch the possibility that the key may present.
+        // In a distributed system another cache instance could have populated
+        // the key in between the current cache instance checking for the presence and
+        // running the query to retreive the data.
+        const re = /^wrong last sequence.*$/
+        if (error.name === 'JetStreamApiError' && re.exec(error.message)) {
+          return
+        }
+      })
+    } else {
+      return this.client.put(this._withNamespace(key), JSON.stringify(value))
     }
   }
 
