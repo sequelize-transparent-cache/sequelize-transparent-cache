@@ -10,7 +10,7 @@ async function start() {
   const js = jetstream(nc)
   let kvm
   try {
-    kvm = await new Kvm(js).create('bucket', {})
+    kvm = await new Kvm(js).create('bucket', { ttl: 60_000 })
   } catch (error) {}
 
   // You need to find appropriate adaptor or create your own, see "Available adaptors" section below
