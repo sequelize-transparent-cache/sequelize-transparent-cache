@@ -49,7 +49,7 @@ await User.cache('find-with-ttl', '30s').findAll({ where: { name: 'Dan' } })
 
 | Param       | Type             | Required | Description                                                                     |
 |-------------|------------------|----------|---------------------------------------------------------------------------------|
-| `client`    | Bucket instance  | yes      | Configured [KV Bucket]() |
+| `client`    | Bucket instance  | yes      | Configured [KV Bucket](https://github.com/nats-io/nats.js/blob/main/kv/README.md) |
 | `namespace` | string           | no       | Prefix for all keys                                                             |
 
 ## Storing format

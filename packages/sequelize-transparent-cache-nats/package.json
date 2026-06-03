@@ -10,23 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/sequelize-transparent-cache/sequelize-transparent-cache.git"
   },
-  "keywords": [
-    "sequelize",
-    "cache",
-    "NATS",
-    "adaptor",
-    "adapter"
-  ],
+  "keywords": ["sequelize", "cache", "NATS", "adaptor", "adapter"],
   "author": {
     "name": "Steve Foster",
-    "email": "steve.foster@madecuirous.com"
+    "email": "steve.foster@madecurious.com"
   },
   "license": "CC-BY-4.0",
   "bugs": {
     "url": "https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/issues"
   },
   "homepage": "https://github.com/sequelize-transparent-cache/sequelize-transparent-cache#readme",
-  "devDependencies": {
+  "peerDependencies": {
     "@nats-io/kv": "^3.4.0"
   }
 }
