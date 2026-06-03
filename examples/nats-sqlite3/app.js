@@ -10,6 +10,10 @@ async function start() {
   const js = jetstream(nc)
   let kvm
   try {
+    // The NATS documentation is slightly wonky, this is the static create()
+    // which creates the bucket in the KV.
+    // - ttl is the max_age, in effect the all of bucket TTL.
+    // - markerTTL is used to enable per-Key TTL
     kvm = await new Kvm(js).create('bucket', { ttl: 60_000, markerTTL: 10_000 })
   } catch (error) {}
 
