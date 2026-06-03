@@ -6,6 +6,8 @@ Stores sequelize objects in NATS using a KeyValue Bucket
 
 ## Example usage
 
+## Example with Bucket TTL
+
 ```javascript
 const { connect } = require('@nats-io/transport-node')
 const { jetstream } = require('@nats-io/jetstream')
@@ -27,6 +29,19 @@ async function start() {
 }
 
 start()
+
+```
+### Example with Bucket TTL and per-key TTL
+
+If per-Key TTLs are required then the bucket needs to be created with the `markerTTL` option. 
+
+
+```javascript
+const js = jetstream(nc)
+const kvBucket = await new Kvm(js).create('bucket', { markerTTL: 1_000 }) // ttl are specified in ms
+
+// set cache key, and set ttl
+await User.cache('find-with-ttl', '30s').findAll({ where: { name: 'Dan' } })
 
 ```
 

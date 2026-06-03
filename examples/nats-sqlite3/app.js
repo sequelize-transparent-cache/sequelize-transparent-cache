@@ -12,9 +12,12 @@ async function start() {
   try {
     // The NATS documentation is slightly wonky, this is the static create()
     // which creates the bucket in the KV.
-    // - ttl is the max_age, in effect the all of bucket TTL.
-    // - markerTTL is used to enable per-Key TTL
-    kvm = await new Kvm(js).create('bucket', { ttl: 60_000, markerTTL: 10_000 })
+    // - ttl: is the bucket max_age, in effect the all of bucket TTL. If this is shorter
+    //   than the per-Key TTL then this applies first.
+    // - markerTTL is used to enable per-Key TTL it controls how long the tombstone DEL
+    //   marker is left on the Key.
+    // kvm = await new Kvm(js).create('bucket', { ttl: 60_000, markerTTL: 10_000 })
+    kvm = await new Kvm(js).create('bucket', { markerTTL: 10_000 })
   } catch (error) {}
 
   // You need to find appropriate adaptor or create your own, see "Available adaptors" section below
