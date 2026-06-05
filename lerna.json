@@ -1,10 +1,12 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "publish": {
       "registry": "https://registry.npmjs.org/"
     }
   },
-  "version": "2.3.0",
+  "version": "2.3.1",
   "npmClient": "npm"
 }
