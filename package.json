@@ -11,7 +11,7 @@
     "eslint-plugin-jest": "^29.15.2",
     "eslint-plugin-n": "^18.0.1",
     "eslint-plugin-promise": "^7.3.0",
-    "jest": "^24.9.0",
+    "jest": "^30.4.2",
     "lerna": "^9.0.7"
   },
   "workspaces": ["packages/*"]
