@@ -1,17 +1,9 @@
 {
-  "name": "sequelize-transparent-cache-ioredis",
+  "name": "@mediasuite/sequelize-transparent-cache-ioredis",
   "version": "2.3.0",
   "description": "ioredis adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
-  "keywords": [
-    "sequelize",
-    "cache",
-    "redis",
-    "ioredis",
-    "plugin",
-    "adaptor",
-    "adapter"
-  ],
+  "keywords": ["sequelize", "cache", "redis", "ioredis", "plugin", "adaptor", "adapter"],
   "repository": {
     "type": "git",
     "url": "https://github.com/DanielHreben/sequelize-transparent-cache.git"

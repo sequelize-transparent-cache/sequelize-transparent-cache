@@ -1,15 +1,9 @@
 {
-  "name": "sequelize-transparent-cache-variable",
+  "name": "@mediasuite/sequelize-transparent-cache-variable",
   "version": "2.2.3",
   "description": "Local variable adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
-  "keywords": [
-    "sequelize",
-    "cache",
-    "plugin",
-    "adapter",
-    "adaptor"
-  ],
+  "keywords": ["sequelize", "cache", "plugin", "adapter", "adaptor"],
   "repository": {
     "type": "git",
     "url": "https://github.com/DanielHreben/sequelize-transparent-cache.git"
