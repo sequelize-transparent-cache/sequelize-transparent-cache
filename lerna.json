@@ -5,6 +5,7 @@
       "registry": "https://registry.npmjs.org/"
     }
   },
+  "conventionalCommits": true,
   "version": "2.3.0",
   "npmClient": "npm"
 }

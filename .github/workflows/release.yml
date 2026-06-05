@@ -1,0 +1,54 @@
+name: Release and Publish
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.TRANSPARENT_CACHE_APP_ID }}
+          private-key: ${{ secrets.TRANSPARENT_CACHE_PRIVATE_KEY }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      # Step 2: Set up Node.js environment
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Step 3: Install all monorepo dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: Run build and test steps (Recommended)
+      - name: Build and Test
+        run: |
+          npx lerna run build
+          npx lerna run test
+
+      # Step 5: Configure Git identities for automated release commits
+      - name: Configure Git Bot
+        run: |
+          git config --global user.name "${{ steps.app-token.outputs.app-slug }}[bot]"
+          git config --global user.email "${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com"
+
+      # Step 6: Publish changed packages
+      - name: Lerna Publish
+        run: npx lerna publish --conventional-commits --yes
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }} # Needed to push tags/releases back to GitHub
