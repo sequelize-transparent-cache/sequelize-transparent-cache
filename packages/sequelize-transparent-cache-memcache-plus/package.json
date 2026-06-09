@@ -1,9 +1,17 @@
 {
-  "version": "2.2.3",
+  "version": "2.4.0",
   "name": "sequelize-transparent-cache-memcache-plus",
   "description": "MemcachePlus adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
-  "keywords": ["sequelize", "cache", "memcached", "memcache-plus", "plugin", "adapter", "adaptor"],
+  "keywords": [
+    "sequelize",
+    "cache",
+    "memcached",
+    "memcache-plus",
+    "plugin",
+    "adapter",
+    "adaptor"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sequelize-transparent-cache/sequelize-transparent-cache.git"

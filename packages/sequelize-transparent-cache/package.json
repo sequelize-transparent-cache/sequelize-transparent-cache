@@ -1,9 +1,13 @@
 {
-  "version": "2.3.0",
+  "version": "2.4.0",
   "name": "sequelize-transparent-cache",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "src/index.js",
-  "keywords": ["sequelize", "cache", "plugin"],
+  "keywords": [
+    "sequelize",
+    "cache",
+    "plugin"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sequelize-transparent-cache/sequelize-transparent-cache.git"

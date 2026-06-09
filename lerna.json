@@ -1,11 +1,13 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "publish": {
       "registry": "https://registry.npmjs.org/"
     }
   },
   "conventionalCommits": true,
-  "version": "2.3.0",
+  "version": "2.4.0",
   "npmClient": "npm"
 }
