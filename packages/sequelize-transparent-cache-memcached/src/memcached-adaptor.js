@@ -15,7 +15,7 @@ class MemcachedAdaptor {
   }
 
   set(key, value, options) {
-    const ttl = options && options.ttl > 0 ? options.ttl : this.lifetime
+    const ttl = options && options.ttl != null ? options.ttl : this.lifetime
     return new Promise((resolve, reject) => {
       this.client.set(this._withNamespace(key), JSON.stringify(value), ttl, (error) =>
         error ? reject(error) : resolve(),
