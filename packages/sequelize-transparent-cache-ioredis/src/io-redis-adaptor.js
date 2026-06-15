@@ -1,5 +1,5 @@
 class IORedisAdaptor {
-  constructor({ client, namespace, lifetime }) {
+  constructor({ client, namespace, lifetime = 0 }) {
     this.client = client
     this.namespace = namespace
     this.lifetime = lifetime
@@ -12,10 +12,10 @@ class IORedisAdaptor {
     return keyWithNamespace.join(':')
   }
 
-  set(key, value) {
-    const options = this.lifetime ? ['EX', this.lifetime] : []
+  set(key, value, options) {
+    const opts = options && options.ttl > 0 ? ['EX', options.ttl] : this.lifetime > 0 ? ['EX', this.lifetime] : []
 
-    return this.client.set(this._withNamespace(key), JSON.stringify(value), options)
+    return this.client.set(this._withNamespace(key), JSON.stringify(value), opts)
   }
 
   get(key) {

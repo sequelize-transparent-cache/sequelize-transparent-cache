@@ -18,6 +18,10 @@ describe('Adaptor methods', () => {
     expect(await memcachePlusAdaptor.set(key, data)).toEqual(undefined)
   })
 
+  test('set with ttl', async () => {
+    expect(await memcachePlusAdaptor.set(key, data, { ttl: 30 })).toEqual(undefined)
+  })
+
   test('get', async () => {
     expect(await memcachePlusAdaptor.get(['missing'])).toEqual(null)
     expect(await memcachePlusAdaptor.get(key)).toEqual(data)

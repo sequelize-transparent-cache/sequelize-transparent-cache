@@ -12,8 +12,9 @@ class MemcachePlusAdaptor {
     return keyWithNamespace.join(':')
   }
 
-  set(key, value) {
-    return this.client.set(this._withNamespace(key), value, this.lifetime)
+  set(key, value, options) {
+    const ttl = options && options.ttl > 0 ? options.ttl : this.lifetime
+    return this.client.set(this._withNamespace(key), value, ttl)
   }
 
   get(key) {
