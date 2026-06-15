@@ -5,7 +5,7 @@ module.exports = (client) => ({
   withCache(modelClass) {
     modelClass.cache = function (customId, options) {
       return customId
-        ? buildClassMethods.manual(client, this, { customKey: customId, ...options })
+        ? buildClassMethods.manual(client, this, { ...options, customKey: customId })
         : buildClassMethods.auto(client, this, options)
     }
 
