@@ -86,4 +86,5 @@ module.exports = {
   getAll,
   destroy,
   clearKey,
+  parseOptions,
 }
