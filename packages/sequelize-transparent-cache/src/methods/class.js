@@ -1,13 +1,13 @@
 const cache = require('../cache')
 
-function buildAutoMethods(client, model) {
+function buildAutoMethods(client, model, options) {
   return {
     client() {
       return client
     },
     create() {
       return model.create.apply(model, arguments).then((instance) => {
-        return cache.save(client, instance)
+        return cache.save(client, instance, options)
       })
     },
     findByPk(id) {
@@ -16,7 +16,7 @@ function buildAutoMethods(client, model) {
           return instance
         }
 
-        return model.findByPk.apply(model, arguments).then((instance) => cache.save(client, instance))
+        return model.findByPk.apply(model, arguments).then((instance) => cache.save(client, instance, options))
       })
     },
     findById() {
@@ -37,13 +37,13 @@ function buildAutoMethods(client, model) {
   }
 }
 
-function buildManualMethods(client, model, customKey) {
+function buildManualMethods(client, model, options) {
   return {
     client() {
       return client
     },
     findAll() {
-      return cache.getAll(client, model, customKey).then((instances) => {
+      return cache.getAll(client, model, options).then((instances) => {
         if (instances) {
           // any array - cache hit
           return instances
@@ -51,20 +51,20 @@ function buildManualMethods(client, model, customKey) {
 
         return model.findAll
           .apply(model, arguments)
-          .then((instances) => cache.saveAll(client, model, instances, customKey))
+          .then((instances) => cache.saveAll(client, model, instances, options))
       })
     },
     findOne() {
-      return cache.get(client, model, customKey).then((instance) => {
+      return cache.get(client, model, options).then((instance) => {
         if (instance) {
           return instance
         }
 
-        return model.findOne.apply(model, arguments).then((instance) => cache.save(client, instance, customKey))
+        return model.findOne.apply(model, arguments).then((instance) => cache.save(client, instance, options))
       })
     },
     clear() {
-      return cache.clearKey(client, model, customKey)
+      return cache.clearKey(client, model, options)
     },
   }
 }
