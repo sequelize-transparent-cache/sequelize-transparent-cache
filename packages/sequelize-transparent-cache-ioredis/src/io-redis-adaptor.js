@@ -13,7 +13,8 @@ class IORedisAdaptor {
   }
 
   set(key, value, options) {
-    const opts = options && options.ttl > 0 ? ['EX', options.ttl] : this.lifetime > 0 ? ['EX', this.lifetime] : []
+    const ttl = options && options.ttl > 0 ? options.ttl : this.lifetime
+    const opts = ttl > 0 ? ['EX', ttl] : []
 
     return this.client.set(this._withNamespace(key), JSON.stringify(value), opts)
   }

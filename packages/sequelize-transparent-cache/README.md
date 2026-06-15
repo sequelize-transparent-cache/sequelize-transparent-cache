@@ -120,3 +120,25 @@ You can easy write your own adaptor. Each adaptor must implement 3 methods:
 * `del(path: Array<string>): Promise<void>`
 
 Checkout existed adaptors for reference implementation.
+
+## Adaptor Options
+
+Adaptors can be passed a string for a custom key which is used to namespace the key used to identify cached object.
+```js
+// Cache result of arbitrary query - requires cache key
+await User.cache('active-users').findAll({
+  where: {
+    status: 'ACTIVE'
+  }
+})
+```
+Alternatively, an object can be passed after the custom key to the adaptor. Currently, this is limited to per-key TTL, if the cached value needs a different TTL to the one set for the adaptor
+
+```js
+// Cache result of arbitrary query - requires cache key
+await User.cache('active-users', { ttl: 60 }).findAll({
+  where: {
+    status: 'ACTIVE'
+  }
+})
+```
