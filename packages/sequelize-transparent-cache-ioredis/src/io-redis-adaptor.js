@@ -25,7 +25,7 @@ class IORedisAdaptor {
         return data
       }
 
-      return JSON.parse(data, (key, value) => {
+      return JSON.parse(data, (_key, value) => {
         return value && value.type === 'Buffer' ? Buffer.from(value.data) : value
       })
     })
