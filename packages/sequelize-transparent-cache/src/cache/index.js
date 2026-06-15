@@ -1,21 +1,19 @@
 const { instanceToData, dataToInstance } = require('./util')
 
-function getInstanceModel (instance) {
+function getInstanceModel(instance) {
   return instance.constructor
 }
 
-function getInstanceCacheKey (instance) {
-  return getInstanceModel(instance).primaryKeyAttributes.map(pk => instance[pk])
+function getInstanceCacheKey(instance) {
+  return getInstanceModel(instance).primaryKeyAttributes.map((pk) => instance[pk])
 }
 
-async function save (client, instance, customKey) {
+async function save(client, instance, customKey) {
   if (!instance) {
     return Promise.resolve(instance)
   }
 
-  const key = [
-    getInstanceModel(instance).name
-  ]
+  const key = [getInstanceModel(instance).name]
 
   if (customKey) {
     key.push(customKey)
@@ -26,57 +24,43 @@ async function save (client, instance, customKey) {
   return client.set(key, instanceToData(instance)).then(() => instance)
 }
 
-function saveAll (client, model, instances, customKey) {
-  const key = [
-    model.name,
-    customKey
-  ]
+function saveAll(client, model, instances, customKey) {
+  const key = [model.name, customKey]
 
   return client.set(key, instances.map(instanceToData)).then(() => instances)
 }
 
-function getAll (client, model, customKey) {
-  const key = [
-    model.name,
-    customKey
-  ]
+function getAll(client, model, customKey) {
+  const key = [model.name, customKey]
 
-  return client.get(key).then(dataArray => {
-    if (!dataArray) { // undefined - cache miss
+  return client.get(key).then((dataArray) => {
+    if (!dataArray) {
+      // undefined - cache miss
       return dataArray
     }
-    return dataArray.map(data => dataToInstance(model, data))
+    return dataArray.map((data) => dataToInstance(model, data))
   })
 }
 
-function get (client, model, id) {
-  const key = [
-    model.name,
-    id
-  ]
+function get(client, model, id) {
+  const key = [model.name, id]
 
-  return client.get(key).then(data => {
+  return client.get(key).then((data) => {
     return dataToInstance(model, data)
   })
 }
 
-function destroy (client, instance) {
+function destroy(client, instance) {
   if (!instance) {
     return Promise.resolve(instance)
   }
 
-  const key = [
-    getInstanceModel(instance).name,
-    ...getInstanceCacheKey(instance)
-  ]
+  const key = [getInstanceModel(instance).name, ...getInstanceCacheKey(instance)]
   return client.del(key)
 }
 
-function clearKey (client, model, customKey) {
-  const key = [
-    model.name,
-    customKey
-  ]
+function clearKey(client, model, customKey) {
+  const key = [model.name, customKey]
   return client.del(key)
 }
 
@@ -86,5 +70,5 @@ module.exports = {
   get,
   getAll,
   destroy,
-  clearKey
+  clearKey,
 }

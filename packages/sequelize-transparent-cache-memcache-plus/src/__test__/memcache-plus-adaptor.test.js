@@ -5,7 +5,7 @@ const MemcachePlusAdaptor = require('..')
 const memcachePlusAdaptor = new MemcachePlusAdaptor({
   client: memcachePlus,
   namespace: 'model',
-  lifetime: 60 * 60
+  lifetime: 60 * 60,
 })
 
 afterAll(() => memcachePlus.disconnect())
