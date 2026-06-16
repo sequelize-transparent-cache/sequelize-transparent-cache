@@ -6,7 +6,11 @@ Stores sequelize objects in NATS using a KeyValue Bucket
 
 ## Example usage
 
-## Example with Bucket TTL
+*NOTE: NATS uses milliseconds for durations when configuring a bucket (ttl and markerTTL). But setting the ttl per-key is done as a string duration (e.g. `5s`).*
+
+### Example with Bucket TTL
+
+By setting the TTL (max_age) at the bucket level all keys will be expired based on this value.
 
 ```javascript
 const { connect } = require('@nats-io/transport-node')
@@ -16,7 +20,7 @@ const { Kvm } = require('@nats-io/kv')
 // connect to the default server 127.0.0.1:4222
 
 async function start() {
-  nc = await connect()
+  const nc = await connect()
 
   const js = jetstream(nc)
   const kvBucket = await new Kvm(js).create('bucket', { ttl: 1_000 }) // ttl is specified in ms
@@ -31,7 +35,7 @@ async function start() {
 start()
 
 ```
-### Example with Bucket TTL and per-key TTL
+### Example with Bucket Marker TTL and per-key TTL
 
 If per-Key TTLs are required then the bucket needs to be created with the `markerTTL` option. 
 
@@ -41,7 +45,7 @@ const js = jetstream(nc)
 const kvBucket = await new Kvm(js).create('bucket', { markerTTL: 1_000 }) // ttl are specified in ms
 
 // set cache key, and set ttl
-await User.cache('find-with-ttl', '30s').findAll({ where: { name: 'Dan' } })
+await User.cache('find-with-ttl', { ttl: '30s' }).findAll({ where: { name: 'Dan' } })
 
 ```
 

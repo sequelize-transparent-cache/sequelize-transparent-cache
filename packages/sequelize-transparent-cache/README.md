@@ -1,11 +1,11 @@
 # sequelize-transparent-cache
 
-[![Build Status](https://travis-ci.org/DanielHreben/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/DanielHreben/sequelize-transparent-cache)
-[![Coverage Status](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/DanielHreben/sequelize-transparent-cache)
+[![Build Status](https://travis-ci.org/sequelize-transparent-cache/sequelize-transparent-cache.svg?branch=master)](https://travis-ci.org/sequelize-transparent-cache/sequelize-transparent-cache)
+[![Coverage Status](https://codecov.io/gh/sequelize-transparent-cache/sequelize-transparent-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/sequelize-transparent-cache/sequelize-transparent-cache)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Code Climate](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/DanielHreben/sequelize-transparent-cache)
+[![Code Climate](https://codeclimate.com/github/sequelize-transparent-cache/sequelize-transparent-cache/badges/gpa.svg)](https://codeclimate.com/github/sequelize-transparent-cache/sequelize-transparent-cache)
 [![npm version](https://badge.fury.io/js/sequelize-transparent-cache.svg)](https://badge.fury.io/js/sequelize-transparent-cache)
-[![Dependency Status](https://david-dm.org/DanielHreben/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
+[![Dependency Status](https://david-dm.org/sequelize-transparent-cache/sequelize-transparent-cache.svg)](https://www.versioneye.com/user/projects/5922c858da94de003b9f63af)
 
 Simple to use and universal cache layer for Sequelize.
 
@@ -79,8 +79,9 @@ await user.cache().update({
 
 Look for all examples applications in `examples` folder.
 
-* [Usage with memcached](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/memcached-mysql)
-* [Usage with ioredis](https://github.com/DanielHreben/sequelize-transparent-cache/blob/master/examples/redis-mysql)
+* [Usage with ioredis](https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/blob/master/examples/redis-mysql)
+* [Usage with memcached](https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/blob/master/examples/memcached-mysql)
+* [Usage with NATS](https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/blob/master/examples/nats-sqlite3)
 
 ## Methods
 
@@ -108,9 +109,10 @@ In addition, both objects will contain `client()` method to get cache adaptor.
 
 ## Available adaptors
 
+* [ioredis](https://www.npmjs.com/package/sequelize-transparent-cache-ioredis)
 * [memcached](https://www.npmjs.com/package/sequelize-transparent-cache-memcached)
 * [memcache-plus](https://www.npmjs.com/package/sequelize-transparent-cache-memcache-plus)
-* [ioredis](https://www.npmjs.com/package/sequelize-transparent-cache-ioredis)
+* [NATS](https://www.npmjs.com/package/sequelize-transparent-cache-nats)
 * [variable](https://www.npmjs.com/package/sequelize-transparent-cache-variable)
 
 You can easy write your own adaptor. Each adaptor must implement 3 methods:
@@ -132,7 +134,9 @@ await User.cache('active-users').findAll({
   }
 })
 ```
-Alternatively, an object can be passed after the custom key to the adaptor. Currently, this is limited to per-key TTL, if the cached value needs a different TTL to the one set for the adaptor
+Alternatively, an object can be passed after the custom key to the adaptor. Currently, this is limited to per-key TTL, if the cached value needs a different TTL to the one set for the adaptor.
+
+*NOTE: Adaptors my use different duration types, for example `30` for ioredis and memcache-based, and `30s` for NATS.*
 
 ```js
 // Cache result of arbitrary query - requires cache key
