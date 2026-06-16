@@ -11,13 +11,13 @@ class NatsAdaptor {
     return keyWithNamespace.join('.')
   }
 
-  set(key, value, ttl = undefined) {
-    if (ttl) {
+  set(key, value, options) {
+    if (options && options.ttl && typeof options.ttl === 'string') {
       // in this context this is `Bucket.create()` which takes 3 arguments, the latter being
       // the per-Key TTL specified as a string duration. It is misnamed in the signature as
       // `markerTTL?`, however when it is passed to the `_put()` method is it used to populate
       // the header `MessageTTL`.
-      return this.client.create(this._withNamespace(key), JSON.stringify(value), ttl).catch((error) => {
+      return this.client.create(this._withNamespace(key), JSON.stringify(value), options.ttl).catch((error) => {
         // This is to catch the possibility that the key may present.
         // In a distributed system another cache instance could have populated
         // the key in between the current cache instance checking for the presence and

@@ -61,20 +61,26 @@ describe('NatsAdaptor', () => {
       expect(put).toHaveBeenCalledWith(namespacedKey, JSON.stringify(data))
     })
 
+    test('use put if options.ttl is not a string', async () => {
+      const put = jest.spyOn(client, 'put')
+      await adaptor.set(key, data, { ttl: 30 })
+      expect(put).toHaveBeenCalledWith(namespacedKey, JSON.stringify(data))
+    })
+
     test('uses create and forwards the ttl when one is given', async () => {
       const create = jest.spyOn(client, 'create')
-      await adaptor.set(key, data, '30s')
+      await adaptor.set(key, data, { ttl: '30s' })
       expect(create).toHaveBeenCalledWith(namespacedKey, JSON.stringify(data), '30s')
     })
 
     test('swallows "wrong last sequence" conflicts on create', async () => {
-      await adaptor.set(key, data, '30s')
-      await expect(adaptor.set(key, data, '30s')).resolves.toBeUndefined()
+      await adaptor.set(key, data, { ttl: '30s' })
+      await expect(adaptor.set(key, data, { ttl: '30s' })).resolves.toBeUndefined()
     })
 
     test('rethrows unexpected create errors', async () => {
       jest.spyOn(client, 'create').mockRejectedValue(jetStreamError('boom'))
-      await expect(adaptor.set(key, data, '30s')).rejects.toThrow('boom')
+      await expect(adaptor.set(key, data, { ttl: '30s' })).rejects.toThrow('boom')
     })
   })
 
