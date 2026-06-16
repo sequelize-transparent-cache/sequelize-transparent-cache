@@ -1,0 +1,8 @@
+version: '3'
+services:
+  nats:
+    image: nats:2.14-linux
+    command:
+      - -js
+    ports:
+      - 127.0.0.1:4222:4222
