@@ -6,6 +6,10 @@ Stores sequelize objects in variable. Useful for debugging purposes.
 
 **Warning**: Do not use this adaptor in production, unless you know what you doing.
 
+## Note
+
+This adaptor ignores the optional object argument, used to pass additional options to more featured adaptors.
+
 ## Example usage
 
 ```javascript
