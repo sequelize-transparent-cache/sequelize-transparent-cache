@@ -22,5 +22,8 @@
   "homepage": "https://github.com/sequelize-transparent-cache/sequelize-transparent-cache#readme",
   "peerDependencies": {
     "@nats-io/kv": "^3.4.0"
+  },
+  "engines": {
+    "node": ">= 22"
   }
 }
