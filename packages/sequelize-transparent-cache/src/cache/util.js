@@ -6,7 +6,7 @@ function dataToInstance(model, data) {
   if (!data) {
     return data
   }
-  const include = generateIncludeRecurse(model)
+  const include = generateIncludeFromData(model, data)
   const instance = model.build(data, { isNewRecord: false, raw: false, include })
   restoreTimestamps(data, instance)
   return instance
@@ -50,21 +50,22 @@ function restoreTimestamps(data, instance) {
   })
 }
 
-function generateIncludeRecurse(model, depth = 1) {
-  if (depth > 5) {
+// Only include associations actually present in the cached payload, bounding the
+// rebuilt include tree to what was queried rather than the whole model graph.
+function generateIncludeFromData(model, data, depth = 1) {
+  if (!data || depth > 5) {
     return []
   }
-  return Object.entries(model.associations || [])
-    .filter(([_as, association]) => {
-      const hasOptions = Object.prototype.hasOwnProperty.call(association, 'options')
-      return hasOptions
-    })
-    .map(([as, association]) => {
-      const associatedModel = model.sequelize.model(association.target.name)
+  const associations = model.associations || {}
+  return Object.keys(associations)
+    .filter((as) => data[as] != null)
+    .map((as) => {
+      const associatedModel = model.sequelize.model(associations[as].target.name)
+      const sample = Array.isArray(data[as]) ? data[as][0] : data[as]
       return {
         model: associatedModel,
-        include: generateIncludeRecurse(associatedModel, depth + 1),
         as,
+        include: generateIncludeFromData(associatedModel, sample, depth + 1),
       }
     })
 }
@@ -72,4 +73,5 @@ function generateIncludeRecurse(model, depth = 1) {
 module.exports = {
   instanceToData,
   dataToInstance,
+  generateIncludeFromData,
 }

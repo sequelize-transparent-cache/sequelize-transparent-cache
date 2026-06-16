@@ -121,6 +121,9 @@ describe('Class methods', () => {
       await getQuery()
     )
 
+    delete cacheStore.Group[1]
+    // Deleted so first find goes directly to DB & second one retrieves from cache with association
+
     const getGroupQuery = async () => {
       const group = await Group.cache().findByPk(1, { include: [{ model: User, as: 'groupUsers' }] })
       return group.get().groupUsers[0].get().name
