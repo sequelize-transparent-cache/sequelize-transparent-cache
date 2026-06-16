@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache-nats",
-  "version": "1.0.0",
+  "version": "2.6.0",
   "description": "NATS adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/sequelize-transparent-cache/sequelize-transparent-cache.git"
   },
-  "keywords": ["sequelize", "cache", "NATS", "adaptor", "adapter"],
+  "keywords": [
+    "sequelize",
+    "cache",
+    "NATS",
+    "adaptor",
+    "adapter"
+  ],
   "author": {
     "name": "Steve Foster",
     "email": "steve.foster@madecurious.com"
