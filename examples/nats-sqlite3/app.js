@@ -5,7 +5,7 @@ const { Kvm } = require('@nats-io/kv')
 // connect to the default server 127.0.0.1:4222
 
 async function start() {
-  nc = await connect()
+  const nc = await connect()
 
   const js = jetstream(nc)
   let kvm
@@ -18,7 +18,9 @@ async function start() {
     //   marker is left on the Key.
     // kvm = await new Kvm(js).create('bucket', { ttl: 60_000, markerTTL: 10_000 })
     kvm = await new Kvm(js).create('bucket', { markerTTL: 10_000 })
-  } catch (error) {}
+  } catch (error) {
+    console.error(error)
+  }
 
   // You need to find appropriate adaptor or create your own, see "Available adaptors" section below
   const NatsAdaptor = require('../../packages/sequelize-transparent-cache-nats')
@@ -60,29 +62,21 @@ async function start() {
     await User.cache().create({
       name: 'Daniel',
     })
-  } catch (error) {
-    console.error('create: ', error)
-  }
 
-  // Load user from cache, there should be no queries
-  await User.cache().findByPk(1)
-  await User.cache().findByPk(1)
-  await User.cache().findByPk(1)
-  await User.cache().findByPk(1)
+    // Load user from cache, there should be no queries
+    await User.cache().findByPk(1)
+    await User.cache().findByPk(1)
+    await User.cache().findByPk(1)
+    await User.cache().findByPk(1)
 
-  try {
     await User.cache().create({
       name: 'Daniel',
     })
     await User.cache().create({
       name: 'Daniel1',
     })
-  } catch (error) {
-    console.error('create: ', error)
-  }
 
-  // Cache result of arbitrary query - requires cache key
-  try {
+    // Cache result of arbitrary query - requires cache key
     await User.cache('findall.find-dan').findAll({
       where: {
         name: {
@@ -90,26 +84,18 @@ async function start() {
         },
       },
     })
-  } catch (error) {
-    console.error('findAll: ', error)
-  }
 
-  // Cache result of arbitrary query - requires cache key
-  // Include a TTL which must be string
-  try {
-    await User.cache('findall.find-dan-with-ttl', '30s').findAll({
+    // Cache result of arbitrary query - requires cache key
+    // Include a TTL which must be string
+    await User.cache('findall.find-dan-with-ttl', { ttl: '30s' }).findAll({
       where: {
         name: {
           [Sequelize.Op.like]: 'Dan%',
         },
       },
     })
-  } catch (error) {
-    console.error('findAll: ', error)
-  }
 
-  // Update in db and cache
-  try {
+    // Update in db and cache
     const user = await User.cache().create({
       name: 'Dene',
     })
@@ -117,11 +103,11 @@ async function start() {
       id: user.id,
       name: 'Vikki',
     })
+    kvm.destroy()
+    process.exit()
   } catch (error) {
-    console.error('update: ', error)
+    console.error('create: ', error)
   }
-  kvm.destroy()
-  process.exit()
 }
 
 start()
