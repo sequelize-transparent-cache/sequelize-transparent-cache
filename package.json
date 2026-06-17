@@ -14,5 +14,9 @@
     "jest": "^30.4.2",
     "lerna": "^9.0.7"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "name": "",
+  "version": ""
 }
