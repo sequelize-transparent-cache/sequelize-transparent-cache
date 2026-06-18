@@ -1,15 +1,19 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "publish": {
       "registry": "https://registry.npmjs.org/",
-      "ignoreChanges": ["**/__tests__/**"]
+      "ignoreChanges": [
+        "**/__tests__/**"
+      ]
     },
     "version": {
       "conventionalCommits": true
     }
   },
-  "version": "2.6.0",
+  "version": "3.0.0",
   "changelogPreset": {
     "name": "conventionalcommits"
   },

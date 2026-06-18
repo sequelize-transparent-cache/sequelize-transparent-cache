@@ -1,6 +1,6 @@
 {
   "name": "sequelize-transparent-cache-nats",
-  "version": "2.6.0",
+  "version": "3.0.0",
   "description": "NATS adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
   "scripts": {
