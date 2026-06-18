@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0",
+  "version": "2.6.1",
   "name": "sequelize-transparent-cache-ioredis",
   "description": "ioredis adaptor for sequelize-transparent-cache",
   "main": "src/index.js",
