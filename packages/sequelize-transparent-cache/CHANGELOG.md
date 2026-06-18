@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/compare/v3.0.0...v3.0.1) (2026-06-18)
+
+### Bug Fixes
+
+* Rehydration of cached models with large number of associations
+
+
 ## [3.0.0](https://github.com/sequelize-transparent-cache/sequelize-transparent-cache/compare/v2.6.1...v3.0.0) (2026-06-18)
 
 ### ⚠ BREAKING CHANGES
