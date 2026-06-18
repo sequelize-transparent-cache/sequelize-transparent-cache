@@ -3,11 +3,7 @@
   "name": "sequelize-transparent-cache",
   "description": "Simple to use and universal cache layer for Sequelize",
   "main": "src/index.js",
-  "keywords": [
-    "sequelize",
-    "cache",
-    "plugin"
-  ],
+  "keywords": ["sequelize", "cache", "plugin"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sequelize-transparent-cache/sequelize-transparent-cache.git"
@@ -18,7 +14,7 @@
   },
   "license": "CC-BY-4.0",
   "peerDependencies": {
-    "sequelize": ">=5"
+    "sequelize": ">=6"
   },
   "devDependencies": {
     "sequelize": "^6.37.8",
